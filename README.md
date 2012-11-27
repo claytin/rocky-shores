@@ -1,4 +1,4 @@
-rocky-shores
+Rocky Shores
 ============
 
-game I'm working on while learning opengl 3.0 and up. same as "rocky_shores_OLD" but uses newer opengl functions.
+a small game made in c++ using openGl 3.0 and greater.
