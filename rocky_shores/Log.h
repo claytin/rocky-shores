@@ -12,7 +12,7 @@ public:
 	Log(void);
 	~Log(void);
 
-	void status(std::string message, int line = -1, const char * file = 0);	//prints the message to the console
+	void status(std::string message);	//prints the message to the console
 	void error(std::string message, int line = -1, const char * file = 0);	//same as status but also brings up dialogue
 };
 

@@ -8,16 +8,13 @@ Log::~Log(void){
 
 }
 
-void Log::status(std::string message, int line, const char * file){
-	std::cout << "::status: " << message.c_str();	//print out message
-	if(line != -1 && file != 0){	//print out message
-		std::cout << " @ " << file << ":" << line;
-	}
+void Log::status(std::string message){
+	std::cout << ":> " << message.c_str();	//print out message
 	std::cout << std::endl;	//end line
 }
 
 void Log::error(std::string message, int line, const char * file){
-	std::cout << "::status: " << message.c_str();	//print out message
+	std::cout << ":> error: " << message.c_str();	//print out message
 	if(line != -1 && file != 0){	//print out message
 		std::cout << " @ " << file << ":" << line;
 	}
