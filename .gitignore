@@ -19,5 +19,21 @@
 *.suo
 *.vcxproj
 *.filters
+*.sdf
+*.sln
+*.vcxproj
+*.filters
+*.user
+*.opensdf
+*.suo
+*.db
+*.sublime-project
+*.sublime-workspace
+*.exe
+
+# Directorys to ignore
+Debug/
+Release/
+ipch/
 
 
