@@ -5,8 +5,11 @@
 
 #pragma once
 #include <gl\glew.h>
-#include <gl\glfw.h>
+#include <GL\glfw.h>
 #include "Log.h"
+#include <sstream>
+
+
 
 class Setup{
 
