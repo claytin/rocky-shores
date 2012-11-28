@@ -35,5 +35,8 @@ void Setup::opengl(void){
 		log.error("glew failed to init: \"" + src + "\"", __LINE__, __FILE__);	//print it
 	}
 
-	while(true){}
+	//check to make sure system meets requirments
+	if(!GLEW_VERSION_3_3){
+		log.error("Opengl version 3.3 is not supported this could cause problems");
+	}
 }
