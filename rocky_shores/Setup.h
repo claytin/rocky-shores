@@ -17,6 +17,6 @@ public:
 	Setup(void);
 	~Setup(void);
 
-	void opengl(void);	//this will use glew for opengl and make sure the computer meets requirments
+	void display(void);	//this will use glew for opengl and make sure the computer meets requirments
 };
 

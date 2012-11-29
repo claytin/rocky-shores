@@ -9,7 +9,7 @@
 int main(int argc, char * args){
 
 	Setup setup;
-	setup.opengl();	//get opengl ready for action
+	setup.display();	//get opengl ready for action
 
 	return 0;	//yay all done here
 }

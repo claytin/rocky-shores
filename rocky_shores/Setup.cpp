@@ -9,7 +9,7 @@ Setup::~Setup(void){
 
 }
 
-void Setup::opengl(void){
+void Setup::display(void){
 	Log log;
 
 	if(!glfwInit()){    //try to initalize glfw
