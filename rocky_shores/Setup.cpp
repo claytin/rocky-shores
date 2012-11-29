@@ -12,15 +12,19 @@ Setup::~Setup(void){
 void Setup::opengl(void){
 	Log log;
 
-	if(!glfwInit()){
-		log.error("cannot initialize glfw", __LINE__, __FILE__);
+	if(!glfwInit()){    //try to initalize glfw
+		log.error("cannot initialize glfw", __LINE__, __FILE__);	//if it fails to init send error to log
+	}else{
+		log.status("glfw initialized");	//if successfully initied glfw
 	}
-	log.status("glfw initialized");
+	
 
-	if(!glfwOpenWindow(1024, 768, 0, 0, 0, 0, 32, 0, GLFW_WINDOW)){
-		log.error("cannot create glfw window", __LINE__, __FILE__);
+	if(!glfwOpenWindow(1024, 768, 0, 0, 0, 0, 32, 0, GLFW_WINDOW)){   //try to crate window with glfw, coming soon customizable paramaters
+		log.error("cannot create glfw window", __LINE__, __FILE__);	//if failed to crate window
+	}else{
+		log.status("glfw window crated");	//if window is crated print success
 	}
-	log.status("glfw window crated");
+	
 
 
 	GLenum status = glewInit();
