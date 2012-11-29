@@ -9,7 +9,7 @@ Setup::~Setup(void){
 
 }
 
-void Setup::display(void){
+void Setup::display(int _width, int _height){
 	Log log;
 
 	if(!glfwInit()){    //try to initalize glfw
@@ -19,7 +19,7 @@ void Setup::display(void){
 	}
 	
 
-	if(!glfwOpenWindow(1024, 768, 0, 0, 0, 0, 32, 0, GLFW_WINDOW)){   //try to crate window with glfw, coming soon customizable paramaters
+	if(!glfwOpenWindow(_width, _height, 0, 0, 0, 0, 32, 0, GLFW_WINDOW)){   //try to crate window with glfw, coming soon customizable paramaters
 		log.error("cannot create glfw window", __LINE__, __FILE__);	//if failed to crate window
 	}else{
 		log.status("glfw window crated");	//if window is crated print success

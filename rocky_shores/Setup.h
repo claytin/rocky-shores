@@ -17,6 +17,8 @@ public:
 	Setup(void);
 	~Setup(void);
 
-	void display(void);	//this will use glew for opengl and make sure the computer meets requirments
+	//takes width and height of window to be crated
+	void display(int widht, int height);	//this will use glew for opengl and make sure the computer meets requirments
+
 };
 
