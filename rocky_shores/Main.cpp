@@ -10,6 +10,7 @@ int main(int argc, char * args){
 
 	Setup setup;
 	setup.display(800, 600);	//get opengl ready for action
+	setup.initialLoad("res/require.res");
 
 	return 0;	//yay all done here
 }

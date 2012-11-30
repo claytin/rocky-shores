@@ -8,8 +8,7 @@
 #include <GL\glfw.h>
 #include "Log.h"
 #include <sstream>
-
-
+#include "Loader.h"
 
 class Setup{
 
@@ -19,6 +18,9 @@ public:
 
 	//takes width and height of window to be crated
 	void display(int widht, int height);	//this will use glew for opengl and make sure the computer meets requirments
+	void initialLoad(std::string resfilePath);
 
+private:
+	Log log;
 };
 

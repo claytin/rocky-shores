@@ -9,8 +9,18 @@ Setup::~Setup(void){
 
 }
 
+void Setup::initialLoad(std::string _path){
+	Loader loader;
+
+	if(loader.loadRes(_path) != Loader::GOOD){
+		log.status("loaded required resources");
+	}else{
+		log.error("unable to load required resources. cannot continue, will now exit");
+		glfwTerminate();
+	}
+}
+
 void Setup::display(int _width, int _height){
-	Log log;
 
 	if(!glfwInit()){    //try to initalize glfw
 		log.error("cannot initialize glfw", __LINE__, __FILE__);	//if it fails to init send error to log
@@ -40,7 +50,7 @@ void Setup::display(int _width, int _height){
 	}
 
 	//check to make sure system meets requirments
-	if(!GLEW_VERSION_3_3){
-		log.error("Opengl version 3.3 is not supported this could cause problems");
+	if(!GLEW_VERSION_3_0){
+		log.error("Opengl version 3.0 is not supported this could cause problems");
 	}
 }
