@@ -1,4 +1,5 @@
-//Main.cpp, where it all starts
+//Main.cpp
+//where it all starts
 //this class simply calls setup to initialize opengl, open window, load resourses
 //it doesn't do anything else, super simple stuff
 //-mgc480

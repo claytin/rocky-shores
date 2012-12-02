@@ -1,5 +1,7 @@
-//Defaults.h - very simple file which just contains constant data for everything
+//Defaults.h
+//very simple file which just contains constant data for everything
 //for example error codes
+//-mgc480
 
 #pragma once
 
