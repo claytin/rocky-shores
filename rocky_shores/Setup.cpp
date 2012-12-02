@@ -12,12 +12,15 @@ Setup::~Setup(void){
 void Setup::initialLoad(std::string _path){
 	Loader loader;
 
-	if(loader.loadRes(_path) != Loader::GOOD){
+	Defaults::Status loadStatus = loader.loadRes(_path);
+	if(loadStatus == Defaults::GOOD){
 		log.status("loaded required resources");
 	}else{
-		log.error("unable to load required resources. cannot continue, will now exit");
+		log.error("unable to load required resources. cannot continue, will now exit " + std::to_string(loadStatus));
 		glfwTerminate();
 	}
+
+	while(true){}
 }
 
 void Setup::display(int _width, int _height){
