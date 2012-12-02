@@ -8,13 +8,21 @@ Loader::~Loader(void){
 
 }
 
-Defaults::Status Loader::loadRes(std::string path){
-	std::string line = "err";	//the current line to read
+Defaults::Status Loader::loadRes(std::string _path){
+	std::string directory = "err";
+	std::string line = "err";    //the current line to read
 
-	std::ifstream file(path);	//open the path into file
+	std::ifstream file(_path);    //open the path into file
 
 	if(!file.is_open()){    //check if file was open correctally
-		return Defaults::FILE_NOT_FOUND;	//if not return file not found error
+		return Defaults::FILE_NOT_FOUND;    //if not return file not found error
+	}
+
+	if(_path.find_last_of('/') != std::string::npos){    //if var _path contains char / then
+		//set directory to the location of the file being loaded aka the _path without the .res file
+		directory = _path.substr(0, _path.find_last_of('/') + 1);
+	}else{
+		directory = "";
 	}
 
 	while(true){ 
@@ -43,11 +51,11 @@ Defaults::Status Loader::loadRes(std::string path){
 		if(posOfPeriod == std::string::npos){     //if there is no period in the line then return an invalid file error
 			return Defaults::INVALID_FILE;
 		}
-		fileType = line.substr(posOfPeriod, line.length() - posOfPeriod);    //puts the string after the last period in var filetype
+		fileType = line.substr(posOfPeriod + 1, line.length() - (posOfPeriod + 1));    //puts the string after the last period in var filetype
 
-		if(fileType == ""){
-
-		}
+		//if(){
+//
+		//}
 	}
 
 	return Defaults::GOOD;
