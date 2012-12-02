@@ -9,7 +9,7 @@ Loader::~Loader(void){
 }
 
 Defaults::Status Loader::loadRes(std::string path){
-	std::string line;	//the current line to read
+	std::string line = "err";	//the current line to read
 
 	std::ifstream file(path);	//open the path into file
 
@@ -18,7 +18,7 @@ Defaults::Status Loader::loadRes(std::string path){
 	}
 
 	while(true){ 
-		//as long as the file is readable do: puth the current line contents in string line
+		//as long as the file is readable do: puth the current line contents in variable line
 		//check if the line is not empty
 		//if it contains a resource then load it
 
@@ -30,16 +30,24 @@ Defaults::Status Loader::loadRes(std::string path){
 
 		std::getline(file, line);
 
-		//if(line.at(0) == '#' || line.empty()){    //the character # means it is a comment
-		//	goto skip;    //nothing to do, the line has nothing to compute, go to the next line
-		//}
+		if(line.length() <= 0){    //if the number of characters in the line is less then 0 then skip the line
+			goto skip;    //nothing to do, the line has nothing to compute, go to the next line
 
-		//std::string fileType = "err";
+		}else if(line.at(0) == '#'){    //if the line starts with # then is a comment
+			goto skip;
+		}
 
-		//int posOfPeriod = line.find_last_of('.');
-		//fileType = line.substr(posOfPeriod, line.length() - posOfPeriod);
+		std::string fileType = "err";	//this will the type of file ex: png, ogg, exe
 
-		//std::cout << "file type: " << fileType << std::endl;
+		int posOfPeriod = line.find_last_of('.');	//the position of the last period on the current line after that is the file type
+		if(posOfPeriod == std::string::npos){     //if there is no period in the line then return an invalid file error
+			return Defaults::INVALID_FILE;
+		}
+		fileType = line.substr(posOfPeriod, line.length() - posOfPeriod);    //puts the string after the last period in var filetype
+
+		if(fileType == ""){
+
+		}
 	}
 
 	return Defaults::GOOD;

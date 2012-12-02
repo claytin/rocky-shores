@@ -16,7 +16,7 @@ void Setup::initialLoad(std::string _path){
 	if(loadStatus == Defaults::GOOD){
 		log.status("loaded required resources");
 	}else{
-		log.error("unable to load required resources. cannot continue, will now exit " + std::to_string(loadStatus));
+		log.error("unable to load required resources. cannot continue, will now exit. \n ERROR CODE: \"" + std::to_string(loadStatus) + "\"");
 		glfwTerminate();
 	}
 
