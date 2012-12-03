@@ -1,11 +1,16 @@
 #include "Loader.h"
 
 Loader::Loader(void){
-
+	setMipmap(GL_LINEAR_MIPMAP_NEAREST, GL_NEAREST);
 }
 
 Loader::~Loader(void){
 
+}
+
+void Loader::setMipmap(GLenum min, GLenum max){
+	//minFilter = min;
+	//maxFilter = max;
 }
 
 Defaults::Status Loader::loadRes(std::string _path){
@@ -53,10 +58,44 @@ Defaults::Status Loader::loadRes(std::string _path){
 		}
 		fileType = line.substr(posOfPeriod + 1, line.length() - (posOfPeriod + 1));    //puts the string after the last period in var filetype
 
-		//if(){
-//
-		//}
+		if(fileType == "bmp"){
+
+		}else if(fileType == "tga"){
+			loadTga(line);
+		}
 	}
 
 	return Defaults::GOOD;
+}
+
+Defaults::Status Loader::loadTga(std::string _path){
+	GLuint textureId;
+
+	if(Loader::loadTga(_path, &textureId) != Defaults::GOOD){
+		return Defaults::INVALID_FILE;
+	}
+
+	textures[_path.substr(0, _path.find_last_of("."))] = textureId;
+
+	return Defaults::GOOD;
+}
+
+Defaults::Status Loader::loadTga(std::string _path, GLuint * _index){
+	GLuint textureId;	//the index/ id of the texture in opengl
+
+	glGenTextures(1, &textureId);
+	glBindTexture(GL_TEXTURE_2D, textureId);
+
+	glfwLoadTexture2D(_path.c_str(), 0);
+
+	//setup mipmaping
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+    glGenerateMipmap(GL_TEXTURE_2D);
+
+	*_index = textureId;
+
+	return Defaults::GOOD;	//if the file was loaded then return success
 }
