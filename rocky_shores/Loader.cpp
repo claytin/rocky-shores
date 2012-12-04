@@ -59,6 +59,8 @@ Defaults::Status Loader::loadRes(std::string _path){
 		fileType = line.substr(posOfPeriod + 1, line.length() - (posOfPeriod + 1));    //puts the string after the last period in var filetype
 
 		if(fileType == "bmp"){
+			//GLuint i;
+			//Loader::loadBmp(line, &i);
 
 		}else if(fileType == "tga"){
 			loadTga(line);
@@ -98,4 +100,33 @@ Defaults::Status Loader::loadTga(std::string _path, GLuint * _index){
 	*_index = textureId;
 
 	return Defaults::GOOD;	//if the file was loaded then return success
+}
+
+Defaults::Status Loader::loadBmp(std::string path, GLuint * index){
+	//GLuint textureId;
+
+	//glGenTextures(1, &textureId);
+	//glBindTexture(GL_TEXTURE_2D, textureId);
+
+	unsigned char * header = new unsigned char [54];
+	unsigned int dataPos, width, height, imageSize;
+	unsigned char * data;
+
+	std::ifstream file(path, std::ios::in | std::ios::binary | std::ios::ate);
+	std::cout << "works a som: " << path << std::endl;
+	if(!file.is_open()){
+		return Defaults::FILE_NOT_FOUND;
+	}
+
+
+	file.seekg(0, std::ios::beg);
+	file.read((char*)header, 54);
+
+	std::cout << "working" << path << std::endl;
+	if(header[0] != 'B' || header[1] != 'M'){
+		std::cout << "not working" << std::endl;
+		return Defaults::FILE_CORRUPT;
+	}
+
+	return Defaults::GOOD;
 }

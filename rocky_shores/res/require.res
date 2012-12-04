@@ -9,3 +9,4 @@ mgc480_icon.png
 ninthawsome_icon.png
 captain777_icon.png
 captain777_icon.tga
+captain777_icon.bmp
