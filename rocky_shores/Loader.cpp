@@ -110,7 +110,7 @@ Defaults::Status Loader::loadTga(std::string _path, GLuint * _index){
 }
 
 Defaults::Status Loader::loadBmp(std::string path){
-	GLuint textureId;
+	GLuint textureId;	
 	
 	Defaults::Status status = Loader::loadBmp(path, &textureId);
 	if(status != Defaults::GOOD){
