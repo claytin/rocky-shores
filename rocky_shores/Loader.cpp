@@ -58,12 +58,19 @@ Defaults::Status Loader::loadRes(std::string _path){
 		}
 		fileType = line.substr(posOfPeriod + 1, line.length() - (posOfPeriod + 1));    //puts the string after the last period in var filetype
 
+		Defaults::Status statusOfLoad;
+
 		if(fileType == "bmp"){
-			//GLuint i;
-			//Loader::loadBmp(line, &i);
+			statusOfLoad = loadBmp(directory + line);
+			if(statusOfLoad != Defaults::GOOD){
+				return statusOfLoad;
+			}
 
 		}else if(fileType == "tga"){
-			loadTga(line);
+			statusOfLoad = loadTga(directory + line);
+			if(statusOfLoad != Defaults::GOOD){
+				return statusOfLoad;
+			}
 		}
 	}
 
@@ -73,11 +80,11 @@ Defaults::Status Loader::loadRes(std::string _path){
 Defaults::Status Loader::loadTga(std::string _path){
 	GLuint textureId;
 
-	if(Loader::loadTga(_path, &textureId) != Defaults::GOOD){
+	if(Loader::loadTga(_path, &textureId) != Defaults::GOOD){    //if the load didn't return good then return its error
 		return Defaults::INVALID_FILE;
 	}
 
-	textures[_path.substr(0, _path.find_last_of("."))] = textureId;
+	textures[_path.substr(0, _path.find_last_of("."))] = textureId;    //if the load succeded then added the texture to the list
 
 	return Defaults::GOOD;
 }
@@ -102,18 +109,25 @@ Defaults::Status Loader::loadTga(std::string _path, GLuint * _index){
 	return Defaults::GOOD;	//if the file was loaded then return success
 }
 
+Defaults::Status Loader::loadBmp(std::string path){
+	GLuint textureId;
+	
+	Defaults::Status status = Loader::loadBmp(path, &textureId);
+	if(status != Defaults::GOOD){
+		return status;
+	}
+
+	textures[path.substr(0, path.find_last_of("."))] = textureId;
+
+	return Defaults::GOOD;
+}
+
 Defaults::Status Loader::loadBmp(std::string path, GLuint * index){
-	//GLuint textureId;
-
-	//glGenTextures(1, &textureId);
-	//glBindTexture(GL_TEXTURE_2D, textureId);
-
 	unsigned char * header = new unsigned char [54];
 	unsigned int dataPos, width, height, imageSize;
 	unsigned char * data;
 
 	std::ifstream file(path, std::ios::in | std::ios::binary | std::ios::ate);
-	std::cout << "works a som: " << path << std::endl;
 	if(!file.is_open()){
 		return Defaults::FILE_NOT_FOUND;
 	}
@@ -122,11 +136,41 @@ Defaults::Status Loader::loadBmp(std::string path, GLuint * index){
 	file.seekg(0, std::ios::beg);
 	file.read((char*)header, 54);
 
-	std::cout << "working" << path << std::endl;
+	
 	if(header[0] != 'B' || header[1] != 'M'){
-		std::cout << "not working" << std::endl;
 		return Defaults::FILE_CORRUPT;
 	}
+
+	dataPos = header[0x0A];
+	imageSize = header[0x22];
+	width = header[0x12];
+	height = header[0x16];
+
+	if(dataPos == 0){
+		dataPos = 54;
+	}if(imageSize == 0){
+		imageSize = width * height * 3;
+	}
+
+	data = new unsigned char[imageSize];
+
+	file.read((char*)data, imageSize);
+	file.close();
+
+	GLuint textureId;
+
+	glGenTextures(1, &textureId);
+	glBindTexture(GL_TEXTURE_2D, textureId);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, data);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+    glGenerateMipmap(GL_TEXTURE_2D);
+
+	*index = textureId;
 
 	return Defaults::GOOD;
 }
