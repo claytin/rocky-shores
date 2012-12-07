@@ -10,6 +10,8 @@
 #include "Log.h"
 #include <sstream>
 #include "Loader.h"
+#include <glm\glm.hpp>
+#include <glm\gtc\matrix_transform.hpp>
 
 class Setup{
 

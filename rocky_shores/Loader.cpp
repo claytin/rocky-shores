@@ -60,6 +60,7 @@ Defaults::Status Loader::loadRes(std::string _path){
 
 		Defaults::Status statusOfLoad;
 
+		//check for file type (extension after the last period) and load that type of file
 		if(fileType == "bmp"){
 			statusOfLoad = loadBmp(directory + line);
 			if(statusOfLoad != Defaults::GOOD){
@@ -77,6 +78,8 @@ Defaults::Status Loader::loadRes(std::string _path){
 			if(statusOfLoad != Defaults::GOOD){
 				return statusOfLoad;
 			}
+		}else{
+			//the file type cannot be loaded
 		}
 	}
 

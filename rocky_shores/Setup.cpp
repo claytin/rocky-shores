@@ -20,6 +20,21 @@ void Setup::initialLoad(std::string _path){
 		glfwTerminate();
 	}
 
+	glm::mat4 model = glm::mat4(1.0f);
+	glm::mat4 view = glm::lookAt(
+		glm::vec3(0, 0, 1),
+		glm::vec3(0, 0, 0),
+		glm::vec3(0, 1, 0)
+		);
+	glm::mat4 projection = glm::ortho(0.0f, 800.0f, 600.0f, 0.0f, 0.0f, 10.0f);
+	glm::mat4 modelViewProjection = projection * view * model;
+
+	static const GLfloat vertex[] = {
+		-1.0f, 0.0f, 0.0f, 
+         1.0f, 0.0f, 0.0f,
+         0.0f, 2.0f, 0.0f
+	};
+
 	while(true){
 		glfwSwapBuffers();
 	}
