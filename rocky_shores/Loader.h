@@ -27,6 +27,9 @@ public:
 	Defaults::Status loadBmp(std::string path);    //load a bmp image file into opengl and add its index to the texture list
 	static Defaults::Status loadBmp(std::string path, GLuint * index);	//load a bmp image into opengl and set var index to its index
 
+	Defaults::Status loadGif(std::string path);    //load gif put it in textures list
+	static Defaults::Status loadGif(std::string path, GLuint * index);    //load gif
+
 	void setMipmap(GLenum min, GLenum max);    //sets the mipmap for all textures loaded
 
 private:

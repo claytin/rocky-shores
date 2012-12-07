@@ -71,6 +71,12 @@ Defaults::Status Loader::loadRes(std::string _path){
 			if(statusOfLoad != Defaults::GOOD){
 				return statusOfLoad;
 			}
+		}else if(fileType == "gif"){
+			GLuint stf;
+			statusOfLoad = Loader::loadGif(directory + line, &stf);
+			if(statusOfLoad != Defaults::GOOD){
+				return statusOfLoad;
+			}
 		}
 	}
 
@@ -171,6 +177,32 @@ Defaults::Status Loader::loadBmp(std::string path, GLuint * index){
     glGenerateMipmap(GL_TEXTURE_2D);
 
 	*index = textureId;
+
+	return Defaults::GOOD;
+}
+
+Defaults::Status Loader::loadGif(std::string path, GLuint * index){
+	unsigned char * data;
+	unsigned int width, height, size;
+
+	std::ifstream file(path, std::ios::in | std::ios::binary | std::ios::ate);
+	
+	if(!file.is_open()){
+		return::Defaults::FILE_NOT_FOUND;
+	}
+
+	size = file.tellg();
+	data = new unsigned char[size];
+
+	file.seekg(0, std::ios::beg);
+	file.read((char*)data, size);
+	file.close();
+
+	if(data[0] == 'G' && data[1] == 'I' && data[2] == 'F'){
+		
+	}else{
+		return Defaults::INVALID_FILE;
+	}
 
 	return Defaults::GOOD;
 }

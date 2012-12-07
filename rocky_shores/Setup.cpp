@@ -20,7 +20,9 @@ void Setup::initialLoad(std::string _path){
 		glfwTerminate();
 	}
 
-	while(true){}
+	while(true){
+		glfwSwapBuffers();
+	}
 }
 
 void Setup::display(int _width, int _height){
