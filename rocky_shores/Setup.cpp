@@ -20,6 +20,9 @@ void Setup::initialLoad(std::string _path){
 		glfwTerminate();
 	}
 
+	GLuint result;
+	Loader::loadVertexShader("res/shaders/simple.vert", &result);    //testing Testing TESTING GOT IT, THIS IS NOT PERMANENT, DO NOT LET THIS INTO A COMMIT...
+
 	glm::mat4 model = glm::mat4(1.0f);
 	glm::mat4 view = glm::lookAt(
 		glm::vec3(0, 0, 1),

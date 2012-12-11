@@ -13,6 +13,7 @@
 #include "Defaults.h"
 #include <gl\glew.h>
 #include <gl\glfw.h>
+#include "Log.h"
 
 class Loader{
 public:
@@ -30,8 +31,9 @@ public:
 	Defaults::Status loadGif(std::string path);    //load gif put it in textures list
 	static Defaults::Status loadGif(std::string path, GLuint * index);    //load gif
 
-	static Defaults::Status loadVertexShader(std::string path, GLuint * index);    //load a vertex shader and put its index/id in var index
-	static Defaults::Status loadFragmentShader(std::string path, GLuint * index);	//load a fragment shader and 
+	static Defaults::Status loadVertexShader(std::string path, GLuint * index);    //load a vertex shader and compile it put its index/id in var index
+	static Defaults::Status loadFragmentShader(std::string path, GLuint * index);	//load a fragment shader and compile it
+	static Defaults::Status loadShader(std::string vertexShader, std::string fragmentShader, GLuint programId);    //load and link both shaders and return id
 
 	void setMipmap(GLenum min, GLenum max);    //sets the mipmap for all textures loaded
 
