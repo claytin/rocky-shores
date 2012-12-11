@@ -30,6 +30,9 @@ public:
 	Defaults::Status loadGif(std::string path);    //load gif put it in textures list
 	static Defaults::Status loadGif(std::string path, GLuint * index);    //load gif
 
+	static Defaults::Status loadVertexShader(std::string path, GLuint * index);    //load a vertex shader and put its index/id in var index
+	static Defaults::Status loadFragmentShader(std::string path, GLuint * index);	//load a fragment shader and 
+
 	void setMipmap(GLenum min, GLenum max);    //sets the mipmap for all textures loaded
 
 private:

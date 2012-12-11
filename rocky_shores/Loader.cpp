@@ -80,6 +80,7 @@ Defaults::Status Loader::loadRes(std::string _path){
 			}
 		}else{
 			//the file type cannot be loaded
+			return Defaults::INVALID_FILE;
 		}
 	}
 
@@ -132,59 +133,67 @@ Defaults::Status Loader::loadBmp(std::string path){
 }
 
 Defaults::Status Loader::loadBmp(std::string path, GLuint * index){
-	unsigned char * header = new unsigned char [54];
-	unsigned int dataPos, width, height, imageSize;
-	unsigned char * data;
+	unsigned char * header = new unsigned char [54];	//holds the header for the bmp this contains information of the file
+	unsigned int dataPos, width, height, imageSize;    //data of image that is extracted from the header
+	unsigned char * data;	//the actual image data
 
-	std::ifstream file(path, std::ios::in | std::ios::binary | std::ios::ate);
-	if(!file.is_open()){
+	std::ifstream file(path, std::ios::in | std::ios::binary | std::ios::ate);	//open file
+	if(!file.is_open()){    //if it opened successfuly then continue otherwise return that the file was not found
 		return Defaults::FILE_NOT_FOUND;
 	}
 
-
-	file.seekg(0, std::ios::beg);
-	file.read((char*)header, 54);
+	file.seekg(0, std::ios::beg);	//go to the begining
+	file.read((char*)header, 54);	//read the first 54 bytes and put it into the header for later extraction
 
 	
-	if(header[0] != 'B' || header[1] != 'M'){
+	if(header[0] != 'B' || header[1] != 'M'){    //check to make sure it is a valid bmp file (all bmp files start with BM)
 		return Defaults::FILE_CORRUPT;
 	}
 
+	//get the information from specific places in the header
 	dataPos = header[0x0A];
 	imageSize = header[0x22];
 	width = header[0x12];
 	height = header[0x16];
 
+
 	if(dataPos == 0){
 		dataPos = 54;
-	}if(imageSize == 0){
+	}
+	if(imageSize == 0){    //if the image size is not included in the bitmap file then
 		imageSize = width * height * 3;
 	}
 
-	data = new unsigned char[imageSize];
+	data = new unsigned char[imageSize];	//now that we know the size of the image create an array for the data with the size of the image
 
-	file.read((char*)data, imageSize);
-	file.close();
+	file.read((char*)data, imageSize);	//read the rest of the image into data
+	file.close();	//now that everything is done close the steam
 
-	GLuint textureId;
+	GLuint textureId;	//used to store the index of the texture created in opengl
 
+	//the rest is pretty self explanatory
 	glGenTextures(1, &textureId);
 	glBindTexture(GL_TEXTURE_2D, textureId);
 
+	//give data to opengl
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, data);
 
+	//setup mipmaping
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
     glGenerateMipmap(GL_TEXTURE_2D);
 
+	//finaly set the pointer
 	*index = textureId;
 
 	return Defaults::GOOD;
 }
 
-Defaults::Status Loader::loadGif(std::string path, GLuint * index){
+Defaults::Status Loader::loadGif(std::string path, GLuint * index){    //load a GIF file (under construction)
+	//this is not done and undocumented. it doesn't work. 
+	//IN OTHER WORDS DON'T USE IT.
 	unsigned char * data;
 	unsigned int width, height, size;
 
