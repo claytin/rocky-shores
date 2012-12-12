@@ -270,5 +270,58 @@ Defaults::Status Loader::loadVertexShader(std::string path, GLuint * index){
 }
 
 Defaults::Status Loader::loadFragmentShader(std::string path, GLuint * index){
+	GLuint shaderId = glCreateShader(GL_FRAGMENT_SHADER);    //holds the index of the loaded shader
+	std::string shaderData;    //holds the data from the loaded shader program
+
+	std::ifstream file(path, std::ios::in);
+
+	if(!file.is_open()){
+		return Defaults::FILE_NOT_FOUND;
+	}
+
+	Log::status("Loading Fragment Shader: " + path);
+	Log::status("----------------------------------------------------");
+
+	while(file.good()){    //while the file is not at the end put its contents in var line then add line to shader data
+		std::string line;
+		std::getline(file, line);
+		shaderData += "\n" + line;
+		Log::status(":: " + line);
+	}
+
+	file.close();    //all is well now the file can be closed
+
+	Log::status(SEPARATOR);
+	Log::status("Finished loading, Now compiling...");
+
+	//compile dat shader
+	char const * sourcePointer = shaderData.c_str();
+	glShaderSource(shaderId, 1, &sourcePointer , NULL);    //give the data to opengl
+	glCompileShader(shaderId);    //compile dat shit
+
+	//check the status of the shader (see how the compiling went)
+	GLint status = GL_FALSE;	//the status of the compile
+	int length = 0;    //the length of the string of the status
+
+	glGetShaderiv(shaderId, GL_COMPILE_STATUS, &status);	//get the status and put it in status
+	glGetShaderiv(shaderId, GL_INFO_LOG_LENGTH, &length);	//get the length of the status and put it in length
+
+	std::vector<char> shaderStatus(length);	//this is where the actual status is held
+	glGetShaderInfoLog(shaderId, length, NULL, &shaderStatus[0]);	//put the shader status in var shaderStatus
+
+	Log::status("Compile Status:");
+	Log::status(SEPARATOR);
+	Log::status("-- BEGIN --");
+	Log::status(&shaderStatus[0]);
+	Log::status("-- END --");
+
 	return Defaults::GOOD;
+}
+
+Defaults::Status Loader::loadShader(std::string vertex, std::string fragment, GLuint programId){
+
+}
+
+Defaults::Status Loader::linkShader(GLuint vert, GLuint frag, GLuint * programId){
+
 }
