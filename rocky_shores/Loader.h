@@ -34,7 +34,7 @@ public:
 	static Defaults::Status loadVertexShader(std::string path, GLuint * index);    //load a vertex shader and compile it put its index/id in var index
 	static Defaults::Status loadFragmentShader(std::string path, GLuint * index);	//load a fragment shader and compile it
 	static Defaults::Status loadShader(std::string vertexShader, std::string fragmentShader, GLuint programId);    //load and link both shaders and return id of the program
-	static Defaults::Status linkShader(GLuint fragmentShaderProgramId, GLuint vertexShaderProgramId, GLuint * linkedProgramId);    //link a vertex and fragment opengl compile shader
+	static void linkShader(GLuint fragmentShaderProgramId, GLuint vertexShaderProgramId, GLuint * linkedProgramId);    //link a vertex and fragment opengl compile shader
 
 
 	void setMipmap(GLenum min, GLenum max);    //sets the mipmap for all textures loaded

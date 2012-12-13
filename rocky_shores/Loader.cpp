@@ -309,6 +309,7 @@ Defaults::Status Loader::loadFragmentShader(std::string path, GLuint * index){
 	std::vector<char> shaderStatus(length);	//this is where the actual status is held
 	glGetShaderInfoLog(shaderId, length, NULL, &shaderStatus[0]);	//put the shader status in var shaderStatus
 
+	//fancy printing
 	Log::status("Compile Status:");
 	Log::status(SEPARATOR);
 	Log::status("-- BEGIN --");
@@ -322,6 +323,27 @@ Defaults::Status Loader::loadShader(std::string vertex, std::string fragment, GL
 
 }
 
-Defaults::Status Loader::linkShader(GLuint vert, GLuint frag, GLuint * programId){
+void Loader::linkShader(GLuint vert, GLuint frag, GLuint * programId){
+	Log::status("Linking Shaders");
 
+	GLint result = GL_FALSE;
+	int logLength;
+
+	//create and link new program
+	*programId = glCreateProgram();
+	glAttachShader(*programId, vert);
+    glAttachShader(*programId, frag);
+    glLinkProgram(*programId);
+
+	//check to make sure it linked correctaly
+	glGetProgramiv(*programId, GL_LINK_STATUS, &result);
+	glGetProgramiv(*programId, GL_INFO_LOG_LENGTH, &logLength);
+	std::vector<char> errorMessage(std::max(logLength, int(1)));
+	glGetShaderInfoLog(*programId, logLength, NULL, &errorMessage[0]);
+
+	Log::status("Link Status:");
+	Log::status(SEPARATOR);
+	Log::status("-- BEGIN --");
+	Log::status(&errorMessage[0]);
+	Log::status("-- END -- ");
 }
