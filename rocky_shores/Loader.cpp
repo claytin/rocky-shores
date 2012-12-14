@@ -319,9 +319,8 @@ Defaults::Status Loader::loadFragmentShader(std::string path, GLuint * index){
 	return Defaults::GOOD;
 }
 
-Defaults::Status Loader::loadShader(std::string vertex, std::string fragment, GLuint programId){
+Defaults::Status Loader::loadShader(std::string vertex, std::string fragment, GLuint * programId){
 	GLuint fragmentShaderId, vertexShaderId;	//holds the indevidual shaders
-	GLuint programId;	//holds the final linked shader program
 
 	//holds status from each proccess
 	Defaults::Status vertexStatus, fragmentStatus, linkStatus;
@@ -331,7 +330,7 @@ Defaults::Status Loader::loadShader(std::string vertex, std::string fragment, GL
 	fragmentStatus = Loader::loadFragmentShader(fragment, &fragmentShaderId);
 
 	//git dem shaders and link em
-	linkStatus = Loader::linkShader(vertexShaderId, fragmentShaderId, &programId);
+	linkStatus = Loader::linkShader(vertexShaderId, fragmentShaderId, programId);
 
 	//now that the program has been compiled and linked the individual shaders can be deleted. SO LETS DELETE THEM!
 	glDeleteShader(vertexShaderId);

@@ -21,7 +21,7 @@ void Setup::initialLoad(std::string _path){
 	}
 
 	GLuint result;
-	Loader::loadVertexShader("res/shaders/simple.vert", &result);    //OH SHIT THIS GOT IN A COMMIT...
+	Loader::loadShader("res/shaders/simple.vert", "res/shaders/simple.frag", &result);	//i could explain this but i think ill let you figure it out.
 
 	glm::mat4 model = glm::mat4(1.0f);
 	glm::mat4 view = glm::lookAt(
