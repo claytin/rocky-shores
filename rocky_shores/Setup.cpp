@@ -21,7 +21,7 @@ void Setup::initialLoad(std::string _path){
 	}
 
 	GLuint result;
-	Loader::loadVertexShader("res/shaders/simple.vert", &result);    //testing Testing TESTING GOT IT, THIS IS NOT PERMANENT, DO NOT LET THIS INTO A COMMIT...
+	Loader::loadVertexShader("res/shaders/simple.vert", &result);    //OH SHIT THIS GOT IN A COMMIT...
 
 	glm::mat4 model = glm::mat4(1.0f);
 	glm::mat4 view = glm::lookAt(
