@@ -21,4 +21,9 @@ public:
 
 private:
 
+	//holds the matrix that will be used in rendering
+	glm::mat4 * model;
+	glm::mat4 * view;
+	glm::mat4 * projection;
+	glm::mat4 * modelViewProjection;
 };
