@@ -20,9 +20,10 @@ void Setup::initialLoad(std::string _path){
 		glfwTerminate();
 	}
 
-	GLuint result;
-	Loader::loadShader("res/shaders/simple.vert", "res/shaders/simple.frag", &result);	//i could explain this but i think ill let you figure it out.
+	GLuint simpleShader;
+	Loader::loadShader("res/shaders/simple.vert", "res/shaders/simple.frag", &simpleShader);	//err umm well...
 
+	/*
 	glm::mat4 model = glm::mat4(1.0f);
 	glm::mat4 view = glm::lookAt(
 		glm::vec3(0, 0, 1),
@@ -31,14 +32,15 @@ void Setup::initialLoad(std::string _path){
 		);
 	glm::mat4 projection = glm::ortho(0.0f, 800.0f, 600.0f, 0.0f, 0.0f, 10.0f);
 	glm::mat4 modelViewProjection = projection * view * model;
+	*/
 
-	static const GLfloat vertex[] = {
-		-1.0f, 0.0f, 0.0f, 
-         1.0f, 0.0f, 0.0f,
-         0.0f, 2.0f, 0.0f
-	};
+	SimpleRender renderer;
+	renderer.setShader(simpleShader);
 
 	while(true){
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		renderer.render();
+
 		glfwSwapBuffers();
 	}
 }
