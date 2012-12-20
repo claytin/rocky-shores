@@ -364,14 +364,19 @@ Defaults::Status Loader::linkShader(GLuint vert, GLuint frag, GLuint * programId
 	//check to make sure it linked correctaly
 	glGetProgramiv(*programId, GL_LINK_STATUS, &result);
 	glGetProgramiv(*programId, GL_INFO_LOG_LENGTH, &logLength);
-	std::vector<char> errorMessage(std::max(logLength, int(1)));
-	glGetShaderInfoLog(*programId, logLength, NULL, &errorMessage[0]);
 
+	//print message
 	Log::status("Link Status:");
 	Log::status(SEPARATOR);
-	Log::status("-- BEGIN --");
-	Log::status(&errorMessage[0]);
-	Log::status("-- END -- ");
+	if (logLength > 0){
+		std::vector<char> shaderStatusMessage(logLength + 1);
+		glGetProgramInfoLog(*programId, logLength, NULL, &shaderStatusMessage[0]);
+		Log::status("-- BEGIN --");
+		Log::status(&shaderStatusMessage[0]);
+		Log::status("-- END -- ");
+	}else{
+		Log::status("NO STATUS FOR SHADER");
+	}
 
 	return Defaults::GOOD;
 }
