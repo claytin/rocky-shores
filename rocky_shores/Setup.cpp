@@ -37,7 +37,16 @@ void Setup::initialLoad(std::string _path){
 	SimpleRender renderer;
 	renderer.setShader(simpleShader);
 
+	ConsoleInput consoleInput(void);    //allow console input (this is only for developing)
+
 	while(true){
+		//check if the window should be closed
+		if(!glfwGetWindowParam(GLFW_OPENED) || glfwGetKey(GLFW_KEY_ESC) == GLFW_PRESS){    //check the window should be closed, if so close it and stop the aplication from contuing
+			glfwTerminate();	//close the window
+			return;    //its over folks you can go home now
+		}
+
+		//render all the stuff again
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		renderer.render();
 

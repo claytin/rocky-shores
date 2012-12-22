@@ -13,6 +13,7 @@
 #include <glm\glm.hpp>
 #include <glm\gtc\matrix_transform.hpp>
 #include "SimpleRender.h"
+#include "ConsoleInput.h"
 
 class Setup{
 
