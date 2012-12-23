@@ -12,6 +12,6 @@ public:
 	~Drawable(void);
 
 private:
-	//glm::mat4 cords;
+	glm::mat4 cords;
 };
 
