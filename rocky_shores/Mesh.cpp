@@ -61,7 +61,11 @@ void Mesh::addFace(face f){
 		if(f.normal[0] == NULL || f.normal[1] == NULL || f.normal[2] == NULL){
 			//one of the normals is null so lets not bother with them
 		}else{
-
+			for(int i = 0; i < 3; i++){
+				if(std::count(normalList.begin(), normalList.end(), *f.normal[i]) <= 0){
+					normalList.push_back(*f.normal[i]);
+				}
+			}
 		}
 
 	}else{
