@@ -24,16 +24,23 @@ public:
 
 	void setMesh(face faces[]);    //removes all existing data and sets it to the given data
 	void addFace(face f);    //adds the given face to the list and adds the vertex data to its list if it is not already given
+
+	void resetData(void){    //reset all data in the vectors cord, uv, normal, and face
+		cordList.clear();
+		uvList.clear();
+		normalList.clear();
+		faces.clear();
+	}
 	
 	//all simple one line functions are put in the header for simplicity
 	//they just do operations on the list
-	void addVertex(glm::vec3 vertexPosition){
+	void addVertex(glm::vec3 vertexPosition){    //add vertex position to list
 		cordList.push_back(vertexPosition);
 	}
-	void addUv(glm::vec2 uv){
+	void addUv(glm::vec2 uv){    //add vertex uv to list
 		uvList.push_back(uv);
 	}
-	void addNormal(glm::vec3 normal){
+	void addNormal(glm::vec3 normal){    //add vertex normal to list
 		normalList.push_back(normal);
 	}
 
