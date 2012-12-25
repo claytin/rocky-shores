@@ -6,21 +6,43 @@
 
 #pragma once
 #include <glm\glm.hpp>
+#include <vector>
 
 class Mesh{
 
 public:
-	Mesh(void);
-	~Mesh(void);
-
 	//the struct face is a simple way to keep all the face data origanized, this is not meant to be read directally and should be interpreted or converted first
 	struct face{
-		glm::vec3 * vertexCords[3];    //holds 3 pointers that should point to glm vec3 vertices, all faces must have the vertices defined, if they are null then... um... well.. lets hope that doesn't happen
-		glm::vec2 * uvCords[3];    //array of 3d points point to 2d uv map cordinates, this is not required and can be left as null, if it is null then use a color instea of a texture
-		glm::vec3 * vertexNormal[3];    //holds a pointer to the normal of each vertex
+		glm::vec3 * cords[3];    //holds 3 pointers that should point to glm vec3 vertices, all faces must have the vertices defined, if they are null then... um... well.. lets hope that doesn't happen
+		glm::vec2 * uv[3];    //array of 3d points point to 2d uv map cordinates, this is not required and can be left as null, if it is null then use a color instea of a texture
+		glm::vec3 * normal[3];    //holds a pointer to the normal of each vertex
 	};
 
-private:
-	
-};
+	Mesh(void);    //this consturctor does nothing, not recomended
+	Mesh(face f[]);    //takes an array of faces and uses them for the mesh
+	~Mesh(void);
 
+	void setMesh(face faces[]);    //removes all existing data and sets it to the given data
+	void addFace(face f);    //adds the given face to the list and adds the vertex data to its list if it is not already given
+	
+	//all simple one line functions are put in the header for simplicity
+	//they just do operations on the list
+	void addVertex(glm::vec3 vertexPosition){
+		cordList.push_back(vertexPosition);
+	}
+	void addUv(glm::vec2 uv){
+		uvList.push_back(uv);
+	}
+	void addNormal(glm::vec3 normal){
+		normalList.push_back(normal);
+	}
+
+private:
+	//these lists hold all the data for the mesh (vertex, uv, normals)
+	std::vector<glm::vec3> cordList;
+	std::vector<glm::vec2> uvList;
+	std::vector<glm::vec3> normalList;
+
+	//holds all the faces in no order (the faces hold no data on their own, just pointers)
+	std::vector<face> faces;
+};
