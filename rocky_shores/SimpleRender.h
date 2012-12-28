@@ -8,6 +8,7 @@
 #include <gl\glew.h>
 #include <glm\glm.hpp>
 #include <glm\gtc\matrix_transform.hpp>
+#include "Drawable.h"
 
 class SimpleRender{
 
@@ -24,10 +25,9 @@ private:
 	GLuint shaderId;
 
 	//holds the matrix that will be used in rendering
-	glm::mat4 * model;
 	glm::mat4 * view;
 	glm::mat4 * projection;
-	glm::mat4 * modelViewProjection;
 
-	GLuint vertexbuffer;
+	//TESTING
+	Drawable testObj;
 };
