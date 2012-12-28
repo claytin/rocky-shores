@@ -1,5 +1,4 @@
 #include "Mesh.h"
-#include <array>
 
 Mesh::Mesh(void){
 
@@ -25,7 +24,7 @@ void Mesh::setMesh(face faces[]){
 	}
 
 	//well it looks like everything is done
-	return;    //absolutaly 9001% compleatly necessary or else this won't work
+	return;    //absolutaly 9001% compleatly necessary or else this won't work 
 }
 
 void Mesh::addFace(face f){
@@ -76,4 +75,21 @@ void Mesh::addFace(face f){
 
 
 	faces.push_back(f);    //add the face to the list
+}
+
+glm::vec3* Mesh::asTriangleVertexArray(void){
+	int vertexCount = 3 * faces.size();    //each face has 3 vertices so face # * 3 is the number of vertices in the entire mesh
+	glm::vec3* vertexArray = new glm::vec3[vertexCount];    //this will hold the array that is returned
+
+	int vertexIndex = 0;    //the curent vertex that will be "added" / set in the array
+	//go though all the faces and then each faces vertices witch will be "added" (there is no real adding in arrays, all it does its sets its value) to the array
+	for(int face = 0; face < faces.size(); face++){    //just go 
+		for(int vert = 0; vert < 3; vert++){
+			vertexArray[vertexIndex] = *faces.at(face).cords[vert];
+				vertexIndex++;    //move onto the next vertex
+		}
+	}
+
+	//now that all the vertecies have been gathered in a array lets return them
+	return vertexArray;
 }
