@@ -1,4 +1,4 @@
-Rocky Shores
+Rocky Shores - Dev
 ============
 
-a small game made in c++ using openGl 3.0 and greater.
+This branch is used for developement (hence the title) and is compleatly unstable. There are no precompiled binarys and you must compile them yourself if you would like to test it.
