@@ -1,4 +1,3 @@
-Rocky Shores
+Rocky Shores - Debug
 ============
-
-a small game made in c++ using openGl 3.0 and greater.
+for debuging code and stuff. This branch doesn't really have anything usefull if your just viewing the source. Better checkout the dev or stable branches.
