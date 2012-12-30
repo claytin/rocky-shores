@@ -5,8 +5,8 @@ SimpleRender::SimpleRender(void){
 	//TESTING creat face for test rendering
 	Mesh::face f;
 	f.cords[0] = &glm::vec3(0.0, 1.0, 0.0);
-	f.cords[0] = &glm::vec3(1.0, -1.0, 0.0);
-	f.cords[0] = &glm::vec3(-1.0, -1.0, 0.0);
+	f.cords[1] = &glm::vec3(1.0, -1.0, 0.0);
+	f.cords[2] = &glm::vec3(-1.0, -1.0, 0.0);
 	testObj.addFace(f);
 	testObj.compileVao();
 }

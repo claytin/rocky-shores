@@ -30,6 +30,7 @@ void Mesh::setMesh(face faces[]){
 void Mesh::addFace(face f){
 	//at least all the vertices must have position data if not then the function  returns and the face is not added this
 	//can cause graphical glitches but its better than crashing
+	/* tst
 	if(f.cords[0] != NULL && f.cords[1] != NULL && f.cords[2] != NULL){
 		//well at least the face has its position data
 
@@ -72,7 +73,7 @@ void Mesh::addFace(face f){
 		Log::error("one or more of the faces of the mesh is null, could cause rendering errors. This could be caused by corrupt file, read error...", __LINE__, __FILE__);
 		return;    //causes the program never to add the face and thus causing the face to be ignored
 	}
-
+	*/
 
 	faces.push_back(f);    //add the face to the list
 }
@@ -83,10 +84,12 @@ glm::vec3* Mesh::asTriangleVertexArray(void){
 
 	int vertexIndex = 0;    //the curent vertex that will be "added" / set in the array
 	//go though all the faces and then each faces vertices witch will be "added" (there is no real adding in arrays, all it does its sets its value) to the array
-	for(int face = 0; face < faces.size(); face++){    //just go 
+	for(int face = 0; face < faces.size(); face++){
 		for(int vert = 0; vert < 3; vert++){
-			vertexArray[vertexIndex] = *faces.at(face).cords[vert];
-				vertexIndex++;    //move onto the next vertex
+			std::cout << "a: " << vertexIndex << " b: " << vertexCount << " c: " << faces.at(face).cords[0]->x <<  std::endl;
+
+			//vertexArray[vertexIndex] = *faces.at(face).cords[vert];
+			vertexIndex++;    //move onto the next vertex
 		}
 	}
 
