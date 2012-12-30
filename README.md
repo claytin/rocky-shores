@@ -1,3 +1,4 @@
-Rocky Shores - Debug
+Rocky Shores - Dev
 ============
-for debuging code and stuff. This branch doesn't really have anything usefull if your just viewing the source. Better checkout the dev or stable branches.
+
+This branch is used for developement (hence the title) and is compleatly unstable. There are no precompiled binarys and you must compile them yourself if you would like to test it.
