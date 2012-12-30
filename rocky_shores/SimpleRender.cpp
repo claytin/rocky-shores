@@ -4,9 +4,9 @@ SimpleRender::SimpleRender(void){
 
 	//TESTING creat face for test rendering
 	Mesh::face f;
-	f.cords[0] = &glm::vec3(0.0, 1.0, 0.0);
-	f.cords[1] = &glm::vec3(1.0, -1.0, 0.0);
-	f.cords[2] = &glm::vec3(-1.0, -1.0, 0.0);
+	f.cords[0] = &glm::vec3(0.0f, 1.0f, 0.0f);
+	f.cords[1] = &glm::vec3(1.0f, -1.0f, 0.0f);
+	f.cords[2] = &glm::vec3(-1.0f, -1.0f, 0.0f);
 	testObj.addFace(f);
 	testObj.compileVao();
 }
@@ -27,7 +27,7 @@ void SimpleRender::setMatrix(glm::mat4 * view, glm::mat4 * projection){
 }
 
 void SimpleRender::render(void){
-	/*
+	
 	glUseProgram(shaderId);    //use the shader that has been sent down to us from the heavens
 
 	//use the vertex buffer for drawing
@@ -45,5 +45,5 @@ void SimpleRender::render(void){
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 
 	glDisableVertexAttribArray(0);
-	*/
+	
 }

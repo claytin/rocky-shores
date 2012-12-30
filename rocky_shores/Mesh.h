@@ -25,7 +25,8 @@ public:
 
 	void setMesh(face faces[]);    //removes all existing data and sets it to the given data
 	void addFace(face f);    //adds the given face to the list and adds the vertex data to its list if it is not already given
-	glm::vec3* asTriangleVertexArray(void);    //usefull for compiling vao and simple rendering, it returns all the vertices that are needed to draw every face in the mesh
+	glm::vec3* asTriangleVertexArray(void);    //returns all the vertices that are needed to draw every face in the mesh, compleatly unorganized and unoptomized
+	float* asTriangleFloatArray(void);	//get the mesh as an array of floating point numbers, every 3 floats are one face
 
 	void resetData(void){    //reset all data in the vectors cord, uv, normal, and face
 		cordList.clear();

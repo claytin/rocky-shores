@@ -80,19 +80,42 @@ void Mesh::addFace(face f){
 
 glm::vec3* Mesh::asTriangleVertexArray(void){
 	int vertexCount = 3 * faces.size();    //each face has 3 vertices so face # * 3 is the number of vertices in the entire mesh
-	glm::vec3* vertexArray = new glm::vec3[vertexCount];    //this will hold the array that is returned
+	glm::vec3 * vertexArray = new glm::vec3[vertexCount];    //this will hold the array that is returned
 
 	int vertexIndex = 0;    //the curent vertex that will be "added" / set in the array
 	//go though all the faces and then each faces vertices witch will be "added" (there is no real adding in arrays, all it does its sets its value) to the array
 	for(int face = 0; face < faces.size(); face++){
 		for(int vert = 0; vert < 3; vert++){
-			std::cout << "a: " << vertexIndex << " b: " << vertexCount << " c: " << faces.at(face).cords[0]->x <<  std::endl;
+			std::cout << "a: " << vertexIndex << " b: " << vertexCount << " c: " << faces.at(face).cords[vert]->x <<  std::endl;
 
-			//vertexArray[vertexIndex] = *faces.at(face).cords[vert];
+			vertexArray[vertexIndex] = *faces.at(face).cords[vert];
 			vertexIndex++;    //move onto the next vertex
 		}
 	}
 
 	//now that all the vertecies have been gathered in a array lets return them
+	return vertexArray;
+}
+
+float* Mesh::asTriangleFloatArray(void){
+	int vertexCount = 3 * faces.size();    //the total number of vertices in the entire mesh
+	float * vertexArray = new float[vertexCount * 3];    //the array that will be returned
+
+	glm::vec3 * glmVertexArray = asTriangleVertexArray();    //the individual verteces will be extracted from this
+
+	int currentVertex = 0;
+	for(int i = 0; i < vertexCount; i++){
+		vertexArray[currentVertex] = glmVertexArray[i].x;
+		currentVertex++;
+		vertexArray[currentVertex] = glmVertexArray[i].y;
+		currentVertex++;
+		vertexArray[currentVertex] = glmVertexArray[i].z;
+		currentVertex++;
+	}
+	
+	for (int i = 0; i < vertexCount * 3; i++){
+		std::cout << vertexArray[i] << std::endl;
+	}
+
 	return vertexArray;
 }
