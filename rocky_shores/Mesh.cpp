@@ -86,8 +86,6 @@ glm::vec3* Mesh::asTriangleVertexArray(void){
 	//go though all the faces and then each faces vertices witch will be "added" (there is no real adding in arrays, all it does its sets its value) to the array
 	for(int face = 0; face < faces.size(); face++){
 		for(int vert = 0; vert < 3; vert++){
-			std::cout << "a: " << vertexIndex << " b: " << vertexCount << " c: " << faces.at(face).cords[vert]->x <<  std::endl;
-
 			vertexArray[vertexIndex] = *faces.at(face).cords[vert];
 			vertexIndex++;    //move onto the next vertex
 		}

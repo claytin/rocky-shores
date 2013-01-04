@@ -47,7 +47,7 @@ public:
 		normalList.push_back(normal);
 	}
 
-private:
+protected:
 	//these lists hold all the data for the mesh (vertex, uv, normals)
 	std::vector<glm::vec3> cordList;
 	std::vector<glm::vec2> uvList;
