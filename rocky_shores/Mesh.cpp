@@ -30,7 +30,7 @@ void Mesh::setMesh(face faces[]){
 void Mesh::addFace(face f){
 	//at least all the vertices must have position data if not then the function  returns and the face is not added this
 	//can cause graphical glitches but its better than crashing
-	/* tst
+	
 	if(f.cords[0] != NULL && f.cords[1] != NULL && f.cords[2] != NULL){
 		//well at least the face has its position data
 
@@ -43,12 +43,10 @@ void Mesh::addFace(face f){
 			}
 		}
 
+		
 		//now that the cords are squared away we can deal with uv and normal
 		// the uv or normal is not required and can be null so lest check for that
-		if(f.uv[0] == NULL || f.uv[1] == NULL || f.uv[2] == NULL){
-			//at least one of the uvs are null so lets not deal with them
-		}else{
-			//if all the uvs have some value then they will be added using the same technieque as the cords
+		if(f.uv[0] != NULL || f.uv[1] != NULL || f.uv[2] != NULL || f.uv != NULL){
 			for(int i = 0; i < 3; i++){
 				if(std::count(uvList.begin(), uvList.end(), *f.uv[i]) <= 0){
 					//the vertex used in the face is not already in the uvList so lets add it
@@ -67,13 +65,13 @@ void Mesh::addFace(face f){
 				}
 			}
 		}
-
+		
 	}else{
 		//this should never happen, if it does then something is teribly wrong (the face will not be added and an error will be sent to the console)
 		Log::error("one or more of the faces of the mesh is null, could cause rendering errors. This could be caused by corrupt file, read error...", __LINE__, __FILE__);
 		return;    //causes the program never to add the face and thus causing the face to be ignored
 	}
-	*/
+	
 
 	faces.push_back(f);    //add the face to the list
 }
