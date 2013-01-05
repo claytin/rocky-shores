@@ -7,7 +7,7 @@
 #include <stireg.h>	//uses stirng for message
 
 class Log{
-
+	
 public:
 	Log(void);
 	~Log(void);

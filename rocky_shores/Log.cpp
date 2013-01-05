@@ -1,5 +1,7 @@
 #include "Log.h"
 
+static long lineNumber;    //holds the current output line thoughout the whole application
+
 Log::Log(void){
 
 }
@@ -9,8 +11,20 @@ Log::~Log(void){
 }
 
 void Log::status(std::string message){
-	std::cout << ":> " << message.c_str();	//print out message
-	std::cout << std::endl;	//end line
+	int posOfNewLine = message.find_first_of('\n');    //search for \n new line character
+
+	if(posOfNewLine != -1){    //check if there are any new line (\n) characters
+		//Log::status(message.substr(posOfNewLine, (message.length() - posOfNewLine) - 1));
+		if(posOfNewLine == message.length() - 1){
+			Log::status( message.substr(0, message.length() - 1).c_str());
+		}else{
+			
+		}
+	}else{
+		lineNumber++;
+		std::cout <<  lineNumber << ":> " << message.c_str();	//print out message
+		std::cout << std::endl;	//end line
+	}
 }
 
 void Log::error(std::string message, int line, const char * file){

@@ -110,10 +110,6 @@ float* Mesh::asTriangleFloatArray(void){
 		vertexArray[currentVertex] = glmVertexArray[i].z;
 		currentVertex++;
 	}
-	
-	for (int i = 0; i < vertexCount * 3; i++){
-		std::cout << vertexArray[i] << std::endl;
-	}
 
 	return vertexArray;
 }

@@ -17,6 +17,5 @@ void Drawable::compileVao(void){
 	glGenBuffers(1, &vertexArrayObjectId);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexArrayObjectId);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * (faces.size() * 3 * 3), vertexArray, GL_STATIC_DRAW);
-
-	//well our work here is done, that was pretty simple
+	//the amount of space alocated: size of opengl float * number of faces * number of vertices per face * number of values per point x y z
 }
