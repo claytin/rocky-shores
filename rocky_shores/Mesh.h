@@ -12,17 +12,26 @@
 class Mesh{
 
 public:
-	//the struct face is a simple way to keep all the face data origanized, this is not meant to be read directally and should be interpreted or converted first
+	//the struct face is a simple way to keep all the face data origanized, this is not meant to be
+	//read directally and should be interpreted or converted first
 	struct face{
-		glm::vec3 * cords[3];    //holds 3 pointers that should point to glm vec3 vertices, all faces must have the vertices defined, if they are null then... um... well.. lets hope that doesn't happen
-		glm::vec2 * uv[3];    //array of 3d points point to 2d uv map cordinates, this is not required and can be left as null, if it is null then use a color instea of a texture
-		glm::vec3 * normal[3];    //holds a pointer to the normal of each vertex
+		face(void){    //CONSTRUCTOR CONSTRUCTOR, MUST CONSTRUCTINATE. 
 
-		face(void) : cords(), uv(), normal(){
-			//*cords = NULL;
-			//*uv = NULL;
-			//*normal = NULL;
 		}
+
+		glm::vec3 cords(int x) throw (std::exception){
+
+		}
+
+	private:    //all data is held privately and is accessed though functions
+		//the face struct only points to data and holds no data of its own, all the data is held in the
+		//meshes: cordlist, uvList, and normalList.
+		bool hasCords, hasUV, hasNormal;
+
+		glm::vec3 *cords[3];
+		glm::vec2 *uv[3];
+		glm::vec3 *normal[3];
+
 	};
 
 	Mesh(void);    //this consturctor does nothing, not recomended
@@ -43,14 +52,15 @@ public:
 	
 	//all simple one line functions are put in the header for simplicity
 	//they just do operations on the list
-	void addVertex(glm::vec3 vertexPosition){    //add vertex position to list
+	void addCords(glm::vec3 vertexPosition){    //add vertex position to list
 		cordList.push_back(vertexPosition);
+
 	}
 	void addUv(glm::vec2 uv){    //add vertex uv to list
-		uvList.push_back(uv);
+		//uvList.push_back(uv);
 	}
 	void addNormal(glm::vec3 normal){    //add vertex normal to list
-		normalList.push_back(normal);
+		//normalList.push_back(normal);
 	}
 
 protected:

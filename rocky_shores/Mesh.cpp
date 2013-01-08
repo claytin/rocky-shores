@@ -32,38 +32,13 @@ void Mesh::addFace(face f){
 	//can cause graphical glitches but its better than crashing
 	
 	if(f.cords[0] != NULL && f.cords[1] != NULL && f.cords[2] != NULL){
-		//well at least the face has its position data
 
-		//so lets go though each vertex that the face has, if its already in the list then ignore it otherwise add it to the
-		//list so we have a list full of every vertex ever used
 		for(int i = 0; i < 3; i++){
-			if(std::count(cordList.begin(), cordList.end(), *f.cords[i]) <= 0){
-				//the vertex used in the face is not already in the cordList so lets add it
-				cordList.push_back(*f.cords[i]);
-			}
-		}
-
-		
-		//now that the cords are squared away we can deal with uv and normal
-		// the uv or normal is not required and can be null so lest check for that
-		if(f.uv[0] != NULL || f.uv[1] != NULL || f.uv[2] != NULL || f.uv != NULL){
-			for(int i = 0; i < 3; i++){
-				if(std::count(uvList.begin(), uvList.end(), *f.uv[i]) <= 0){
-					//the vertex used in the face is not already in the uvList so lets add it
-					uvList.push_back(*f.uv[i]);
-				}
-			}
-		}
-
-		//and lastly check to see if it has normals (same process as uv)
-		if(f.normal[0] == NULL || f.normal[1] == NULL || f.normal[2] == NULL){
-			//one of the normals is null so lets not bother with them
-		}else{
-			for(int i = 0; i < 3; i++){
-				if(std::count(normalList.begin(), normalList.end(), *f.normal[i]) <= 0){
-					normalList.push_back(*f.normal[i]);
-				}
-			}
+			addCords(*f.cords[i]);
+		}for(int i = 0; i < 3; i++){
+			//addUv(*f.uv[i]);
+		}for(int i = 0; i < 3; i++){
+			//addNormal(*f.normal[i]);
 		}
 		
 	}else{

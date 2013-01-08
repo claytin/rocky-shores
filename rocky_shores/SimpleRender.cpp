@@ -4,9 +4,9 @@ SimpleRender::SimpleRender(void){
 
 	//TESTING creat face for test rendering
 	Mesh::face f;
-	f.cords[0] = &glm::vec3(0.0f, 1.0f, 0.0f);
-	f.cords[1] = &glm::vec3(1.0f, -1.0f, 0.0f);
-	f.cords[2] = &glm::vec3(-1.0f, -1.0f, 0.0f);
+	//f.cords[0] = &glm::vec3(0.0f, 1.0f, 0.0f);
+	//f.cords[1] = &glm::vec3(1.0f, -1.0f, 0.0f);
+	//f.cords[2] = &glm::vec3(-1.0f, -1.0f, 0.0f);
 	testObj.addFace(f);
 	testObj.compileVao();
 }
