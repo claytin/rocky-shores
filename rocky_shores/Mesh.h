@@ -19,7 +19,7 @@ public:
 
 		}
 
-		glm::vec3 cords(int x) throw (std::exception){
+		glm::vec3 cords(int x) throw(Defaults::Exception){
 
 		}
 
