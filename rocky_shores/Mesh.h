@@ -19,8 +19,10 @@ public:
 
 		}
 
-		glm::vec3 cords(int x) throw(Defaults::Exception){
-
+		glm::vec3 cords(int index) throw(Defaults::Exception){
+			if(!hasCords){
+				throw(Defaults::Exception(Defaults::NULL_VERTEX_CORD), "The vertex has not been defined...");
+			}
 		}
 
 	private:    //all data is held privately and is accessed though functions
