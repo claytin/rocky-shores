@@ -8,6 +8,7 @@
 #include <glm\glm.hpp>
 #include <vector>
 #include "Log.h"
+#include "Defaults.h"
 
 class Mesh{
 
@@ -15,25 +16,25 @@ public:
 	//the struct face is a simple way to keep all the face data origanized, this is not meant to be
 	//read directally and should be interpreted or converted first
 	struct face{
-		face(void){    //CONSTRUCTOR CONSTRUCTOR, MUST CONSTRUCTINATE. 
 
-		}
-
-		glm::vec3 cords(int index) throw(Defaults::Exception){
-			if(!hasCords){
-				throw(Defaults::Exception(Defaults::NULL_VERTEX_CORD), "The vertex has not been defined...");
-			}
-		}
+		glm::vec3 *cord[3];
+		glm::vec2 *uv[3];
+		glm::vec3 *normal[3];
 
 	private:    //all data is held privately and is accessed though functions
 		//the face struct only points to data and holds no data of its own, all the data is held in the
 		//meshes: cordlist, uvList, and normalList.
-		bool hasCords, hasUV, hasNormal;
 
-		glm::vec3 *cords[3];
-		glm::vec2 *uv[3];
-		glm::vec3 *normal[3];
+	public:
+		face(void){    //CONSTRUCTOR CONSTRUCTOR, MUST CONSTRUCTINATE. 
+			for(int i = 0; i < 3; i++){    //set all the variables to null so they are not uninitialized
+				cord[i] = NULL;
+				uv[i] = NULL;
+				normal[i] = NULL;
+			}
 
+			std::cout << "doop, zoop, ding\n";
+		}
 	};
 
 	Mesh(void);    //this consturctor does nothing, not recomended
@@ -56,7 +57,6 @@ public:
 	//they just do operations on the list
 	void addCords(glm::vec3 vertexPosition){    //add vertex position to list
 		cordList.push_back(vertexPosition);
-
 	}
 	void addUv(glm::vec2 uv){    //add vertex uv to list
 		//uvList.push_back(uv);
