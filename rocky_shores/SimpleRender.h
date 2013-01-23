@@ -18,7 +18,7 @@ public:
 
 	void setShader(GLuint shaderId);	//can only use one shader, pass in the shader id already linked
 	void setMatrix(glm::mat4 * view, glm::mat4 * projection);	//set the matrix for rendering, it can only have at a time but can be switched
-	void render(void);	//simple call that renders everything
+	void render(Drawable * Drawable);	//renders the given drawable object with the preset shader and matrices
 
 private:
 	//the shader that will be used for all rendering

@@ -4,11 +4,18 @@ SimpleRender::SimpleRender(void){
 
 	//TEST creat face for test rendering
 	Mesh::face f;
-	f.cord[0] = &glm::vec3(0.0f, 1.0f, 0.0f);
-	//f.cord[1] = &glm::vec3(1.0f, -1.0f, 0.0f);
-	//f.cord[2] = &glm::vec3(-1.0f, -1.0f, 0.0f);
-	//testObj.addFace(f);
-	//testObj.compileVao();
+	f.cord[0] = &glm::vec3(0.0f, 0.5f, 0.0f);
+	f.cord[1] = &glm::vec3(-1.0f, -0.0f, 0.0f);
+	f.cord[2] = &glm::vec3(0.0f, -0.5f, 0.0f);
+	testObj.addFace(f);
+
+	Mesh::face f1;
+	f1.cord[0] = &glm::vec3(0.0f, 0.5f, 0.0f);
+	f1.cord[1] = &glm::vec3(1.0f, 0.0f, 0.0f);
+	f1.cord[2] = &glm::vec3(0.0f, -0.5f, 0.0f);
+	testObj.addFace(f1);
+
+	testObj.compileVao();
 }
 
 SimpleRender::~SimpleRender(void){
@@ -21,12 +28,12 @@ void SimpleRender::setShader(GLuint _shaderId){
 
 }
 
-//THIS DOES NOT DO ANYTING YET
+//TODO THIS DOES NOT DO ANYTING YET
 void SimpleRender::setMatrix(glm::mat4 * view, glm::mat4 * projection){
 
 }
 
-void SimpleRender::render(void){
+void SimpleRender::render(Drawable * draw){
 	
 	glUseProgram(shaderId);    //use the shader that has been sent down to us from the heavens
 
@@ -42,7 +49,7 @@ void SimpleRender::render(void){
 		0    //the array starts at 0
 	);
 
-	glDrawArrays(GL_TRIANGLES, 0, 3);
+	glDrawArrays(GL_TRIANGLES, 0, 0);
 
 	glDisableVertexAttribArray(0);
 	

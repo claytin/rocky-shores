@@ -3,6 +3,7 @@
 //the data is stored as an array of faces and vertecies, each face has a pointer to 3 glm vec3 variable
 //the data can easily be converted to array of triangles, vbo, vao...
 //this class is simply a fancy container for 3d / 2d mesh data
+//-mgc480
 
 #pragma once
 #include <glm\glm.hpp>
@@ -31,6 +32,10 @@ public:
 				cord[i] = NULL;
 				uv[i] = NULL;
 				normal[i] = NULL;
+			}
+
+			if(cord[0] == NULL){
+				std::cout << "you need a yack in your pack.\n";
 			}
 
 			std::cout << "doop, zoop, ding\n";

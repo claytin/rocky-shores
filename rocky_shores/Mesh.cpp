@@ -73,7 +73,11 @@ float* Mesh::asTriangleFloatArray(void){
 		currentVertex++;
 		vertexArray[currentVertex] = glmVertexArray[i].z;
 		currentVertex++;
+
+		
 	}
+
+
 
 	return vertexArray;
 }
