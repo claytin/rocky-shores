@@ -23,32 +23,34 @@ void Setup::initialLoad(std::string _path){
 	GLuint simpleShader;
 	Loader::loadShader("res/shaders/simple.vert", "res/shaders/simple.frag", &simpleShader);	//err umm well...
 
-	/*
-	glm::mat4 model = glm::mat4(1.0f);
-	glm::mat4 view = glm::lookAt(
-		glm::vec3(0, 0, 1),
-		glm::vec3(0, 0, 0),
-		glm::vec3(0, 1, 0)
-		);
-	glm::mat4 projection = glm::ortho(0.0f, 800.0f, 600.0f, 0.0f, 0.0f, 10.0f);
-	glm::mat4 modelViewProjection = projection * view * model;
-	*/
-
 	SimpleRender renderer;
 	renderer.setShader(simpleShader);
 
 	ConsoleInput consoleInput(void);    //allow console input (this is only for developing)
 
+
+	//create a drawable for testing the display system
+	Drawable testMesh;
+
+	//create a nice triangle, because who doesn't love triangles
+	Mesh::face tempFace;
+	tempFace.cord[0] = &glm::vec3(0.0f, 1.0f, 0.0f);
+	tempFace.cord[1] = &glm::vec3(1.0f, -1.0f, 0.0f);
+	tempFace.cord[2] = &glm::vec3(-1.0f, -1.0f, 0.0f);
+	testMesh.addFace(tempFace);
+
+	testMesh.compileVao();	//and the object is ready for rendering
+
 	while(true){
 		//check if the window should be closed
-		if(!glfwGetWindowParam(GLFW_OPENED) || glfwGetKey(GLFW_KEY_ESC) == GLFW_PRESS){    //check the window should be closed, if so close it and stop the aplication from contuing
-			glfwTerminate();	//close the window
+		if(!glfwGetWindowParam(GLFW_OPENED) || glfwGetKey(GLFW_KEY_ESC) == GLFW_PRESS){
+			glfwTerminate();
 			return;    //its over folks you can go home now
 		}
 
-		//render all the stuff again
+		
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		renderer.render();
+		renderer.render(&testMesh);    //just keep sendering it to the renderer for the rendering to hapener
 
 		glfwSwapBuffers();
 	}
