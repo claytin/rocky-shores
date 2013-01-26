@@ -20,21 +20,21 @@ public:
 	Loader(void);
 	~Loader(void);
 
-	Defaults::Status loadRes(std::string path);    //load a .res file (file that lists resourses) and load each
+	void loadRes(std::string path) throw (Defaults::Exception);    //load a .res file (file that lists resourses) and load each
 
-	Defaults::Status loadTga(std::string path);    //load a tga and put it in the loader texture map
-	static Defaults::Status loadTga(std::string path, GLuint * index);    //load a tga file and puts its index in the second param
+	void loadTga(std::string path) throw (Defaults::Exception);    //load a tga and put it in the loader texture map
+	static void loadTga(std::string path, GLuint * index) throw (Defaults::Exception);    //load a tga file and puts its index in the second param
 
-	Defaults::Status loadBmp(std::string path);    //load a bmp image file into opengl and add its index to the texture list
-	static Defaults::Status loadBmp(std::string path, GLuint * index);	//load a bmp image into opengl and set var index to its index
+	void loadBmp(std::string path) throw (Defaults::Exception);    //load a bmp image file into opengl and add its index to the texture list
+	static void loadBmp(std::string path, GLuint * index) throw (Defaults::Exception);	//load a bmp image into opengl and set var index to its index
 
-	Defaults::Status loadGif(std::string path);    //load gif put it in textures list
-	static Defaults::Status loadGif(std::string path, GLuint * index);    //load gif
+	void loadGif(std::string path) throw (Defaults::Exception);    //load gif put it in textures list
+	static void loadGif(std::string path, GLuint * index) throw (Defaults::Exception);    //load gif
 
-	static Defaults::Status loadVertexShader(std::string path, GLuint * index);    //load a vertex shader and compile it put its index/id in var index
-	static Defaults::Status loadFragmentShader(std::string path, GLuint * index);	//load a fragment shader and compile it
-	static Defaults::Status loadShader(std::string vertexShader, std::string fragmentShader, GLuint * programId);    //load and link both shaders and return id of the program
-	static Defaults::Status linkShader(GLuint vertexShaderProgramId, GLuint fragmentShaderProgramId, GLuint * linkedProgramId);    //link a vertex and fragment opengl compile shader
+	static void loadVertexShader(std::string path, GLuint * index) throw (Defaults::Exception);    //load a vertex shader and compile it put its index/id in var index
+	static void loadFragmentShader(std::string path, GLuint * index) throw (Defaults::Exception);	//load a fragment shader and compile it
+	static void loadShader(std::string vertexShader, std::string fragmentShader, GLuint * programId) throw (Defaults::Exception);    //load and link both shaders and return id of the program
+	static void linkShader(GLuint vertexShaderProgramId, GLuint fragmentShaderProgramId, GLuint * linkedProgramId) throw (Defaults::Exception);    //link a vertex and fragment opengl compile shader
 
 
 	void setMipmap(GLenum min, GLenum max);    //sets the mipmap for all textures loaded

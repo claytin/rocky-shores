@@ -2,7 +2,7 @@
 #it contains the font and the icons for the loading screen
 
 #main font to use
-font.bmp
+#font.png
 
 #avatars / icons
-captain777_icon.bmp
+captain777_icon.png

@@ -12,12 +12,13 @@ Setup::~Setup(void){
 void Setup::initialLoad(std::string _path){
 	Loader loader;
 
-	Defaults::Status loadStatus = loader.loadRes(_path);
-	if(loadStatus == Defaults::GOOD){
+	try{
+		loader.loadRes(_path);
 		log.status("loaded required resources");
-	}else{
-		log.error("unable to load required resources. cannot continue, will now exit. \n ERROR CODE: \"" + std::to_string(loadStatus) + "\"");
+	}catch(Defaults::Exception e){
+		log.error( e.description + "\n ERROR CODE: \"" + std::to_string(e.type) + "\"");
 		glfwTerminate();
+		return;
 	}
 
 	GLuint simpleShader;
@@ -48,8 +49,8 @@ void Setup::initialLoad(std::string _path){
 			return;    //its over folks you can go home now
 		}
 
-		
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 		renderer.render(&testMesh);    //just keep sendering it to the renderer for the rendering to hapener
 
 		glfwSwapBuffers();

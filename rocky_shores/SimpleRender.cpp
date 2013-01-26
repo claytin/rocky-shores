@@ -35,7 +35,7 @@ void SimpleRender::render(Drawable * draw){
 		0    //the array starts at 0
 	);
 
-	glDrawArrays(GL_TRIANGLES, 0, 0);
+	glDrawArrays(GL_TRIANGLES, 0, 3);
 
 	glDisableVertexAttribArray(0);
 	

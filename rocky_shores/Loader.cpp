@@ -14,14 +14,14 @@ void Loader::setMipmap(GLenum min, GLenum max){
 	//maxFilter = max;
 }
 
-Defaults::Status Loader::loadRes(std::string _path){
-	std::string directory = "err";
-	std::string line = "err";    //the current line to read
+void Loader::loadRes(std::string _path){
+	std::string directory = "null";
+	std::string line = "null";    //the current line being read and proccessed
 
 	std::ifstream file(_path);    //open the path into file
 
 	if(!file.is_open()){    //check if file was open correctally
-		return Defaults::FILE_NOT_FOUND;    //if not return file not found error
+		throw Defaults::Exception(Defaults::FILE_NOT_FOUND, "Unable to find or open file \"" + _path + "\". File doesn't exsist or is currupt.");
 	}
 
 	if(_path.find_last_of('/') != std::string::npos){    //if var _path contains char / then
@@ -54,53 +54,67 @@ Defaults::Status Loader::loadRes(std::string _path){
 		std::string fileType = "err";	//this will the type of file ex: png, ogg, exe
 
 		int posOfPeriod = line.find_last_of('.');	//the position of the last period on the current line after that is the file type
-		if(posOfPeriod == std::string::npos){     //if there is no period in the line then return an invalid file error
-			return Defaults::INVALID_FILE;
+		if(posOfPeriod == std::string::npos){     //if there is no period in the line then throw an invalid file error
+			throw Defaults::Exception(Defaults::INVALID_FILE, "The file \"" + directory + line + "\" listed in the .res file \"" + _path + "\" was found invalid and could not be loaded");
 		}
 		fileType = line.substr(posOfPeriod + 1, line.length() - (posOfPeriod + 1));    //puts the string after the last period in var filetype
 
-		Defaults::Status statusOfLoad;
+		//if a function throws an exception is saved here and thrown at the end of the loop
+		Defaults::Exception exception;
+		bool exceptionThrown = false;
 
 		//check for file type (extension after the last period) and load that type of file
 		if(fileType == "bmp"){
-			statusOfLoad = loadBmp(directory + line);
-			if(statusOfLoad != Defaults::GOOD){
-				return statusOfLoad;
+			try{
+				loadBmp(directory + line);
+			}catch(Defaults::Exception e){
+				exception = e;
+				exceptionThrown = true;
 			}
 
 		}else if(fileType == "tga"){
-			statusOfLoad = loadTga(directory + line);
-			if(statusOfLoad != Defaults::GOOD){
-				return statusOfLoad;
+			try{
+				loadTga(directory + line);
+			}catch(Defaults::Exception e){
+				exception = e;
+				exceptionThrown = true;
 			}
 		}else if(fileType == "gif"){
-			GLuint stf;
-			statusOfLoad = Loader::loadGif(directory + line, &stf);
-			if(statusOfLoad != Defaults::GOOD){
-				return statusOfLoad;
+			try{
+				loadGif(directory + line);
+			}catch(Defaults::Exception e){
+				exception = e;
+				exceptionThrown = true;
 			}
 		}else{
-			//the file type cannot be loaded
-			return Defaults::INVALID_FILE;
+			//the file is of an unknown type
+			throw Defaults::Exception(Defaults::INVALID_FILE, "The file \"" + directory + line + "\" listed in the .res file\"" + _path + "\" was not recognized as a valid file format.");
+		}
+
+		if(exceptionThrown){
+			Defaults::Exception modifiedException = exception;
+			//reformat the exception description to hopefully describe the error better
+			modifiedException.description = "while loading .res file \"" + _path + "\" the resource \"" + directory + line
+				+ "\" could not be loaded and threw \"" + exception.description + "\" with error code \"" + std::to_string(exception.type) + "\"";
+			throw modifiedException;
 		}
 	}
-
-	return Defaults::GOOD;
 }
 
-Defaults::Status Loader::loadTga(std::string _path){
+void Loader::loadTga(std::string _path){
 	GLuint textureId;
 
-	if(Loader::loadTga(_path, &textureId) != Defaults::GOOD){    //if the load didn't return good then return its error
-		return Defaults::INVALID_FILE;
+	try{
+		Loader::loadTga(_path, &textureId);
+	}catch(Defaults::Exception e){
+		throw e;
 	}
 
 	textures[_path.substr(0, _path.find_last_of("."))] = textureId;    //if the load succeded then added the texture to the list
 
-	return Defaults::GOOD;
 }
 
-Defaults::Status Loader::loadTga(std::string _path, GLuint * _index){
+void Loader::loadTga(std::string _path, GLuint * _index){
 	GLuint textureId;	//the index/ id of the texture in opengl
 
 	glGenTextures(1, &textureId);
@@ -116,31 +130,29 @@ Defaults::Status Loader::loadTga(std::string _path, GLuint * _index){
     glGenerateMipmap(GL_TEXTURE_2D);
 
 	*_index = textureId;
-
-	return Defaults::GOOD;	//if the file was loaded then return success
 }
 
-Defaults::Status Loader::loadBmp(std::string path){
+void Loader::loadBmp(std::string path){
 	GLuint textureId;	
-	
-	Defaults::Status status = Loader::loadBmp(path, &textureId);
-	if(status != Defaults::GOOD){
-		return status;
+
+	try{
+		Loader::loadBmp(path, &textureId);
+	}catch(Defaults::Exception e){
+		throw e;
 	}
 
 	textures[path.substr(0, path.find_last_of("."))] = textureId;
 
-	return Defaults::GOOD;
 }
 
-Defaults::Status Loader::loadBmp(std::string path, GLuint * index){
+void Loader::loadBmp(std::string path, GLuint * index){
 	unsigned char * header = new unsigned char [54];	//holds the header for the bmp this contains information of the file
 	unsigned int dataPos, width, height, imageSize;    //data of image that is extracted from the header
 	unsigned char * data;	//the actual image data
 
 	std::ifstream file(path, std::ios::in | std::ios::binary | std::ios::ate);	//open file
 	if(!file.is_open()){    //if it opened successfuly then continue otherwise return that the file was not found
-		return Defaults::FILE_NOT_FOUND;
+		throw Defaults::Exception(Defaults::FILE_NOT_FOUND, "unable to open file\"" + path + "\" it might be missing or currupt");
 	}
 
 	file.seekg(0, std::ios::beg);	//go to the begining
@@ -148,7 +160,7 @@ Defaults::Status Loader::loadBmp(std::string path, GLuint * index){
 
 	
 	if(header[0] != 'B' || header[1] != 'M'){    //check to make sure it is a valid bmp file (all bmp files start with BM)
-		return Defaults::FILE_CORRUPT;
+		throw Defaults::Exception(Defaults::INVALID_FILE, "the file is not a valid .bmp file, the first two characters must be B M");
 	}
 
 	//get the information from specific places in the header
@@ -188,46 +200,27 @@ Defaults::Status Loader::loadBmp(std::string path, GLuint * index){
 
 	//finaly set dat pointer
 	*index = textureId;
-
-	return Defaults::GOOD;
 }
 
-Defaults::Status Loader::loadGif(std::string path, GLuint * index){    //load a GIF file (under construction)
+void Loader::loadGif(std::string path, GLuint * index){    //load a GIF file (under construction)
 	//this is not done and undocumented. it doesn't work. 
 	//IN OTHER WORDS DON'T USE IT.
-	unsigned char * data;
-	unsigned int width, height, size;
 
-	std::ifstream file(path, std::ios::in | std::ios::binary | std::ios::ate);
-	
-	if(!file.is_open()){
-		return::Defaults::FILE_NOT_FOUND;
-	}
-
-	size = file.tellg();
-	data = new unsigned char[size];
-
-	file.seekg(0, std::ios::beg);
-	file.read((char*)data, size);
-	file.close();
-
-	if(data[0] == 'G' && data[1] == 'I' && data[2] == 'F'){
-		
-	}else{
-		return Defaults::INVALID_FILE;
-	}
-
-	return Defaults::GOOD;
+	throw Defaults::Exception(Defaults::NOT_IMPLEMENTED, "the load gif function is currentaly not finished");
 }
 
-Defaults::Status Loader::loadVertexShader(std::string path, GLuint * index){
+void Loader::loadGif(std::string path){
+	throw Defaults::Exception(Defaults::NOT_IMPLEMENTED, "the load gif function is currentaly not finished");
+}
+
+void Loader::loadVertexShader(std::string path, GLuint * index){
 	GLuint shaderId = glCreateShader(GL_VERTEX_SHADER);    //holds the index of the loaded shader
 	std::string shaderData;    //holds the data from the loaded shader program
 
 	std::ifstream file(path, std::ios::in);
 
 	if(!file.is_open()){
-		return Defaults::FILE_NOT_FOUND;
+		throw Defaults::Exception(Defaults::FILE_NOT_FOUND, "unable to open file\"" + path + "\" it might be missing or currupt");
 	}
 
 	Log::status("Loading Vertex Shader: " + path);
@@ -265,18 +258,16 @@ Defaults::Status Loader::loadVertexShader(std::string path, GLuint * index){
 	Log::status("-- BEGIN --");
 	Log::status(&shaderStatus[0]);
 	Log::status("-- END --");
-
-	return Defaults::GOOD;
 }
 
-Defaults::Status Loader::loadFragmentShader(std::string path, GLuint * index){
+void Loader::loadFragmentShader(std::string path, GLuint * index){
 	GLuint shaderId = glCreateShader(GL_FRAGMENT_SHADER);    //holds the index of the loaded shader
 	std::string shaderData;    //holds the data from the loaded shader program
 
 	std::ifstream file(path, std::ios::in);
 
 	if(!file.is_open()){
-		return Defaults::FILE_NOT_FOUND;
+		throw Defaults::Exception(Defaults::FILE_NOT_FOUND, "unable to open file\"" + path + "\" it might be missing or currupt");
 	}
 
 	Log::status("Loading Fragment Shader: " + path);
@@ -315,41 +306,36 @@ Defaults::Status Loader::loadFragmentShader(std::string path, GLuint * index){
 	Log::status("-- BEGIN --");
 	Log::status(&shaderStatus[0]);
 	Log::status("-- END --");
-
-	return Defaults::GOOD;
 }
 
-Defaults::Status Loader::loadShader(std::string vertex, std::string fragment, GLuint * programId){
+void Loader::loadShader(std::string vertex, std::string fragment, GLuint * programId){
 	GLuint fragmentShaderId, vertexShaderId;	//holds the indevidual shaders
 
-	//holds status from each proccess
-	Defaults::Status vertexStatus, fragmentStatus, linkStatus;
-
 	//load dem shaders
-	vertexStatus = Loader::loadVertexShader(vertex, &vertexShaderId);
-	fragmentStatus = Loader::loadFragmentShader(fragment, &fragmentShaderId);
+	try{
+		Loader::loadVertexShader(vertex, &vertexShaderId);
+	}catch(Defaults::Exception e){
+		throw Defaults::Exception(Defaults::CANNOT_LOAD_VERTEX_SHADER, e.description);
+	}
+	try{
+		Loader::loadFragmentShader(fragment, &fragmentShaderId);
+	}catch(Defaults::Exception e){
+		throw Defaults::Exception(Defaults::CANNOT_LOAD_FRAGMENT_SHADER, e.description);
+	}
 
 	//git dem shaders and link em
-	linkStatus = Loader::linkShader(vertexShaderId, fragmentShaderId, programId);
+	try{
+		Loader::linkShader(vertexShaderId, fragmentShaderId, programId);
+	}catch(Defaults::Exception e){
+		throw Defaults::Exception(Defaults::CANNOT_LINK_SHADERS, e.description);
+	}
 
 	//now that the program has been compiled and linked the individual shaders can be deleted. SO LETS DELETE THEM!
 	glDeleteShader(vertexShaderId);
     glDeleteShader(fragmentShaderId);
-
-	//check for errors, if there are any then return what caused the error ex: vertex load
-	if(vertexStatus != Defaults::GOOD){
-		return Defaults::CANNOT_LOAD_VERTEX_SHADER;
-	}else if(fragmentStatus != Defaults::GOOD){
-		return Defaults::CANNOT_LOAD_FRAGMENT_SHADER;
-	}else if(linkStatus != Defaults::GOOD){
-		return Defaults::CANNOT_LINK_SHADERS;
-	}
-
-	//if there where no errors then return good
-	return Defaults::GOOD;    //wow it actually worked. bravo everyone
 }
 
-Defaults::Status Loader::linkShader(GLuint vert, GLuint frag, GLuint * programId){
+void Loader::linkShader(GLuint vert, GLuint frag, GLuint * programId){
 	Log::status("Linking Shaders");
 
 	GLint result = GL_FALSE;
@@ -377,6 +363,4 @@ Defaults::Status Loader::linkShader(GLuint vert, GLuint frag, GLuint * programId
 	}else{
 		Log::status("NO STATUS FOR SHADER");
 	}
-
-	return Defaults::GOOD;
 }

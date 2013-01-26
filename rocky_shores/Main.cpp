@@ -10,8 +10,11 @@
 int main(int argc, char * args){
 
 	Setup setup;
-	setup.display(800, 600);	//get opengl ready for action
+	setup.display(800, 600);	//initialize opengl, glew, and glfw
 	setup.initialLoad("res/require.res");
+
+	std::cout << "Press Enter To Continue..." << std::endl;
+	std::getchar();
 
 	return 0;	//yay all done here
 }
