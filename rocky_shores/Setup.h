@@ -14,6 +14,7 @@
 #include <glm\gtc\matrix_transform.hpp>
 #include "SimpleRender.h"
 #include "ConsoleInput.h"
+#include "Drawable.h"
 
 class Setup{
 

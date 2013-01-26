@@ -1,7 +1,5 @@
 //SimpleRender.h / SimpleRender.cpp
 //used to do simple rendering that is not optomised for performances
-//it does not require opengl 3.0 and is used in place if the computer does not support it
-//its also simple rendering for example load screen
 //-mgc480
 
 #pragma once
@@ -27,7 +25,4 @@ private:
 	//holds the matrix that will be used in rendering
 	glm::mat4 * view;
 	glm::mat4 * projection;
-
-	//TESTING
-	Drawable testObj;
 };
