@@ -48,7 +48,7 @@ void Setup::initialLoad(std::string _path){
 
 		//render all the stuff again
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		renderer.render();
+		//renderer.render();
 
 		glfwSwapBuffers();
 	}
