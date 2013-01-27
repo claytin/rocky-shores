@@ -31,6 +31,9 @@ public:
 	void loadGif(std::string path) throw (Defaults::Exception);    //load gif put it in textures list
 	static void loadGif(std::string path, GLuint * index) throw (Defaults::Exception);    //load gif
 
+	void loadPng(std::string path) throw (Defaults::Exception);    //load png texture and put it in textures
+	static void loadPng(std::string path, GLuint * index) throw (Defaults::Exception);    //load png
+
 	static void loadVertexShader(std::string path, GLuint * index) throw (Defaults::Exception);    //load a vertex shader and compile it put its index/id in var index
 	static void loadFragmentShader(std::string path, GLuint * index) throw (Defaults::Exception);	//load a fragment shader and compile it
 	static void loadShader(std::string vertexShader, std::string fragmentShader, GLuint * programId) throw (Defaults::Exception);    //load and link both shaders and return id of the program

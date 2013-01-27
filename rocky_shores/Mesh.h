@@ -22,11 +22,6 @@ public:
 		glm::vec2 *uv[3];
 		glm::vec3 *normal[3];
 
-	private:    //all data is held privately and is accessed though functions
-		//the face struct only points to data and holds no data of its own, all the data is held in the
-		//meshes: cordlist, uvList, and normalList.
-
-	public:
 		face(void){    //CONSTRUCTOR CONSTRUCTOR, MUST CONSTRUCTINATE. 
 			for(int i = 0; i < 3; i++){    //set all the variables to null so they are not uninitialized
 				cord[i] = NULL;
@@ -35,10 +30,8 @@ public:
 			}
 
 			if(cord[0] == NULL){
-				std::cout << "you need a yack in your pack.\n";
-			}
 
-			std::cout << "doop, zoop, ding\n";
+			}
 		}
 	};
 

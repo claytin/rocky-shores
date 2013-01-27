@@ -71,7 +71,6 @@ void Loader::loadRes(std::string _path){
 				exception = e;
 				exceptionThrown = true;
 			}
-
 		}else if(fileType == "tga"){
 			try{
 				loadTga(directory + line);
@@ -82,6 +81,13 @@ void Loader::loadRes(std::string _path){
 		}else if(fileType == "gif"){
 			try{
 				loadGif(directory + line);
+			}catch(Defaults::Exception e){
+				exception = e;
+				exceptionThrown = true;
+			}
+		}else if(fileType == "png"){
+			try{
+				loadPng(directory + line);
 			}catch(Defaults::Exception e){
 				exception = e;
 				exceptionThrown = true;
@@ -211,6 +217,22 @@ void Loader::loadGif(std::string path, GLuint * index){    //load a GIF file (un
 
 void Loader::loadGif(std::string path){
 	throw Defaults::Exception(Defaults::NOT_IMPLEMENTED, "the load gif function is currentaly not finished");
+}
+
+void Loader::loadPng(std::string path){
+	GLuint textureId;	
+
+	try{
+		Loader::loadPng(path, &textureId);
+	}catch(Defaults::Exception e){
+		throw e;
+	}
+
+	textures[path.substr(0, path.find_last_of("."))] = textureId;
+}
+
+void Loader::loadPng(std::string path, GLuint * index){
+
 }
 
 void Loader::loadVertexShader(std::string path, GLuint * index){
