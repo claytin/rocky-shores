@@ -232,7 +232,7 @@ void Loader::loadPng(std::string path){
 }
 
 void Loader::loadPng(std::string path, GLuint * index){
-
+	throw Defaults::Exception(Defaults::NOT_IMPLEMENTED, "the load png function has not been finished yet");
 }
 
 void Loader::loadVertexShader(std::string path, GLuint * index){
