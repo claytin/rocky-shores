@@ -14,6 +14,7 @@
 #include <gl\glew.h>
 #include <gl\glfw.h>
 #include "Log.h"
+#include <png.h>
 
 class Loader{
 public:
