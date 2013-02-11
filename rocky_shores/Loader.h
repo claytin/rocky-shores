@@ -45,8 +45,5 @@ public:
 
 private:
 	std::map<std::string, GLuint> textures;
-
-	//static GLenum minFilter, maxFilter;
-
 };
 
