@@ -1,8 +1,10 @@
 #define SEPARATOR "----------------------------------------------------"	//TODO FIX THIS LATER
 #include "Loader.h"
 
+static GLenum minFilter = GL_LINEAR_MIPMAP_NEAREST, maxFilter = GL_NEAREST;
+
 Loader::Loader(void){
-	setMipmap(GL_LINEAR_MIPMAP_NEAREST, GL_NEAREST);
+
 }
 
 Loader::~Loader(void){
@@ -10,8 +12,8 @@ Loader::~Loader(void){
 }
 
 void Loader::setMipmap(GLenum min, GLenum max){
-	//minFilter = min;
-	//maxFilter = max;
+	minFilter = min;
+	maxFilter = max;
 }
 
 void Loader::loadRes(std::string _path){
@@ -131,8 +133,8 @@ void Loader::loadTga(std::string _path, GLuint * _index){
 	//setup mipmaping
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, maxFilter);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter);
     glGenerateMipmap(GL_TEXTURE_2D);
 
 	*_index = textureId;
@@ -231,8 +233,10 @@ void Loader::loadPng(std::string path){
 	textures[path.substr(0, path.find_last_of("."))] = textureId;
 }
 
-void Loader::loadPng(std::string path, GLuint * index){
-	throw Defaults::Exception(Defaults::NOT_IMPLEMENTED, "the load png function has not been finished yet");
+void Loader::loadPng(std::string path, GLuint * index){    //this function relies compleatly on libpng
+	std::ifstream file;
+	
+	//file.open
 }
 
 void Loader::loadVertexShader(std::string path, GLuint * index){
@@ -242,7 +246,7 @@ void Loader::loadVertexShader(std::string path, GLuint * index){
 	std::ifstream file(path, std::ios::in);
 
 	if(!file.is_open()){
-		throw Defaults::Exception(Defaults::FILE_NOT_FOUND, "unable to open file\"" + path + "\" it might be missing or currupt");
+		throw Defaults::Exception(Defaults::FILE_NOT_FOUND, "unable to open file, it might be missing or currupt");
 	}
 
 	Log::status("Loading Vertex Shader: " + path);
