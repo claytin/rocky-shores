@@ -1,4 +1,4 @@
-Rocky Shores - Dev
+Rocky Shores - Art
 ============
 
-This branch is used for developement (hence the title) and is compleatly unstable. There are no precompiled binarys and you must compile them yourself if you would like to test it.
+This branch is for adding and changing art wich will latter be merged to other branches
