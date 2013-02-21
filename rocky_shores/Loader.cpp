@@ -201,7 +201,7 @@ void Loader::loadBmp(std::string path, GLuint * index){
 
 	//setup mipmaping
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
     glGenerateMipmap(GL_TEXTURE_2D);
@@ -233,10 +233,46 @@ void Loader::loadPng(std::string path){
 	textures[path.substr(0, path.find_last_of("."))] = textureId;
 }
 
-void Loader::loadPng(std::string path, GLuint * index){    //this function relies compleatly on libpng
-	std::ifstream file;
-	
-	//file.open
+void Loader::loadPng(std::string path, GLuint * index){    //this function relies compleatly on libpng to load pngs
+	const int pngSignatureSize = 8;
+
+	//open file
+	std::ifstream file(path, std::ios::in | std::ios::binary);
+
+	if(!file.is_open()){
+		throw Defaults::Exception(Defaults::FILE_NOT_FOUND, "unable to open file, it might be missing or unreadable");
+	}
+
+	//check to make sure it is a valid png file
+	png_byte pngSignature[pngSignatureSize];
+	file.read((char*)pngSignature, pngSignatureSize);
+
+	if(png_sig_cmp(pngSignature, 0, pngSignatureSize) != 0){
+		throw Defaults::Exception(Defaults::INVALID_FILE, "the file is invalid because it does not have a valid png header, the file could be corrupt or incorectally formated");
+	}
+
+	//create the png data structors from lib png and then check for errors
+	png_structp pngPtr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+	if(!pngPtr) {
+		throw Defaults::Exception(Defaults::EXTERNAL, "libpng could not create a \"png_structp\" using \"png_create_read_struct\"");
+	}
+
+	png_infop infoPtr = png_create_info_struct(pngPtr);
+	if(!infoPtr){
+		throw Defaults::Exception(Defaults::EXTERNAL, "libpng could not create a \"png_infop\" using \"png_create_info_struct\"");
+	}
+
+	//now lets read the data form the png now that the required structs have been created
+	png_bytep* rowPtrs = NULL;
+	char* data = NULL;
+
+	if(setjmp(png_jmpbuf(pngPtr))){
+		png_destroy_read_struct(&pngPtr, &infoPtr,(png_infopp)0);
+		if(rowPtrs != NULL) delete [] rowPtrs;
+		if(data != NULL) delete [] data;
+
+		throw Defaults::Exception(Defaults::EXTERNAL, "libpng could not read the image for an unknown reason...");
+	}
 }
 
 void Loader::loadVertexShader(std::string path, GLuint * index){
