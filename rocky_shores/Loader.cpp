@@ -2,6 +2,7 @@
 #include "Loader.h"
 
 static GLenum minFilter = GL_LINEAR_MIPMAP_NEAREST, maxFilter = GL_NEAREST;
+void readPngData(png_structp pngPtr, png_bytep data, png_size_t length);	//this function is used by libpng to load data from file, this uses ifstream wich rather than lib png's defalt FILE wich is old
 
 Loader::Loader(void){
 
@@ -222,7 +223,7 @@ void Loader::loadGif(std::string path){
 }
 
 void Loader::loadPng(std::string path){
-	GLuint textureId;	
+	GLuint textureId;
 
 	try{
 		Loader::loadPng(path, &textureId);
@@ -273,6 +274,46 @@ void Loader::loadPng(std::string path, GLuint * index){    //this function relie
 
 		throw Defaults::Exception(Defaults::EXTERNAL, "libpng could not read the image for an unknown reason...");
 	}
+
+	//give libpng our read function with a function pointer
+	void (*readPngFunc)(png_structp, png_bytep, png_size_t) = readPngData;
+	png_set_read_fn(pngPtr, (png_voidp)&file, readPngFunc);
+
+	png_set_sig_bytes(pngPtr, pngSignatureSize);	//tell libpng that we alread have already read the signature
+
+	png_read_info(pngPtr, infoPtr);	//get info from png before loading into memory so we can alocat nessasary amount of memory
+
+	unsigned int width =  png_get_image_width(pngPtr, infoPtr);
+	unsigned int height = png_get_image_height(pngPtr, infoPtr);
+	unsigned int bitdepth   = png_get_bit_depth(pngPtr, infoPtr);
+	unsigned int channels   = png_get_channels(pngPtr, infoPtr);
+	unsigned int colorType = png_get_color_type(pngPtr, infoPtr);
+
+	//variables to hold data
+	data = new char[width * height * bitdepth * channels / 8];
+	rowPtrs = new png_bytep[height];
+
+	const unsigned int rowSize = width * bitdepth * channels / 8;
+
+	//set all the data t
+	for (unsigned int i = 0; i < height; i++) {
+		png_uint_32 q = (height- i - 1) * rowSize;
+		rowPtrs[i] = (png_bytep)data + q;
+	}
+
+	//load that image!!!
+	png_read_image(pngPtr, rowPtrs);
+
+	//clean stuff up
+	delete[] (png_bytep)rowPtrs;
+	png_destroy_read_struct(&pngPtr, &infoPtr,(png_infopp)0);
+}
+
+void readPngData(png_structp pngPtr, png_bytep data, png_size_t length){
+	//function called by libpng to load data
+
+	png_voidp steam = png_get_io_ptr(pngPtr);	//get ifsteam back from libpng
+	((std::istream*)steam)->read((char*)data, length);	//read the data using ifsteam
 }
 
 void Loader::loadVertexShader(std::string path, GLuint * index){
@@ -406,8 +447,8 @@ void Loader::linkShader(GLuint vert, GLuint frag, GLuint * programId){
 	//create and link new program
 	*programId = glCreateProgram();
 	glAttachShader(*programId, vert);
-    glAttachShader(*programId, frag);
-    glLinkProgram(*programId);
+	glAttachShader(*programId, frag);
+	glLinkProgram(*programId);
 
 	//check to make sure it linked correctaly
 	glGetProgramiv(*programId, GL_LINK_STATUS, &result);

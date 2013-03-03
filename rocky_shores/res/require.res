@@ -6,3 +6,6 @@ font.png
 
 #avatars / icons
 captain777_icon.png
+mgc480_icon.png
+ninthawsome_icon.png
+mgc480_icon.tga
