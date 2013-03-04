@@ -17,12 +17,13 @@ public:
 	//the struct face is a simple way to keep all the face data origanized, this is not meant to be
 	//read directally and should be interpreted or converted first
 	struct face{
-
 		glm::vec3 *cord[3];
 		glm::vec2 *uv[3];
 		glm::vec3 *normal[3];
+		glm::vec3 color;
 
-		face(void){    //CONSTRUCTOR CONSTRUCTOR, MUST CONSTRUCTINATE. 
+		face(void){    //CONSTRUCTOR CONSTRUCTOR, MUST CONSTRUCT
+			color = glm::vec3(255, 0, 255);    //the color is initaly magenta (the error color)
 			for(int i = 0; i < 3; i++){    //set all the variables to null so they are not uninitialized
 				cord[i] = NULL;
 				uv[i] = NULL;

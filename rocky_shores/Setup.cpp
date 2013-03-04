@@ -35,6 +35,7 @@ void Setup::initialLoad(std::string _path){
 	tempFace.cord[0] = &glm::vec3(0.0f, 1.0f, 0.0f);
 	tempFace.cord[1] = &glm::vec3(1.0f, -1.0f, 0.0f);
 	tempFace.cord[2] = &glm::vec3(-1.0f, -1.0f, 0.0f);
+	tempFace.color = glm::vec3(20, 180, 255);
 	testMesh.addFace(tempFace);
 
 	testMesh.compileVao();	//and the object is ready for rendering
