@@ -1,4 +1,3 @@
-#define SEPARATOR "----------------------------------------------------"	//TODO FIX THIS LATER
 #include "Loader.h"
 
 static GLenum minFilter = GL_LINEAR_MIPMAP_NEAREST, maxFilter = GL_NEAREST;
@@ -219,6 +218,7 @@ void Loader::loadGif(std::string path, GLuint * index){    //load a GIF file (un
 }
 
 void Loader::loadGif(std::string path){
+	//currently no gif loader
 	throw Defaults::Exception(Defaults::NOT_IMPLEMENTED, "the load gif function is currentaly not finished");
 }
 
@@ -309,13 +309,6 @@ void Loader::loadPng(std::string path, GLuint * index){    //this function relie
 	png_destroy_read_struct(&pngPtr, &infoPtr,(png_infopp)0);
 }
 
-void readPngData(png_structp pngPtr, png_bytep data, png_size_t length){
-	//function called by libpng to load data
-
-	png_voidp steam = png_get_io_ptr(pngPtr);	//get ifsteam back from libpng
-	((std::istream*)steam)->read((char*)data, length);	//read the data using ifsteam
-}
-
 void Loader::loadVertexShader(std::string path, GLuint * index){
 	GLuint shaderId = glCreateShader(GL_VERTEX_SHADER);    //holds the index of the loaded shader
 	std::string shaderData;    //holds the data from the loaded shader program
@@ -327,18 +320,15 @@ void Loader::loadVertexShader(std::string path, GLuint * index){
 	}
 
 	Log::status("Loading Vertex Shader: " + path);
-	Log::status("----------------------------------------------------");
 
 	while(file.good()){    //while the file is not at the end put its contents in var line then add line to shader data
 		std::string line;
 		std::getline(file, line);
 		shaderData += "\n" + line;
-		Log::status(":: " + line);
 	}
 
 	file.close();    //all is well now the file can be closed
 
-	Log::status(SEPARATOR);
 	Log::status("Finished loading, Now compiling...");
 
 	//compile dat shader
@@ -357,10 +347,11 @@ void Loader::loadVertexShader(std::string path, GLuint * index){
 	glGetShaderInfoLog(shaderId, length, NULL, &shaderStatus[0]);	//put the shader status in var shaderStatus
 
 	Log::status("Compile Status:");
-	Log::status(SEPARATOR);
 	Log::status("-- BEGIN --");
 	Log::status(&shaderStatus[0]);
 	Log::status("-- END --");
+
+	*index = shaderId;
 }
 
 void Loader::loadFragmentShader(std::string path, GLuint * index){
@@ -374,18 +365,15 @@ void Loader::loadFragmentShader(std::string path, GLuint * index){
 	}
 
 	Log::status("Loading Fragment Shader: " + path);
-	Log::status("----------------------------------------------------");
 
 	while(file.good()){    //while the file is not at the end put its contents in var line then add line to shader data
 		std::string line;
 		std::getline(file, line);
 		shaderData += "\n" + line;
-		Log::status(":: " + line);
 	}
 
 	file.close();    //all is well now the file can be closed
 
-	Log::status(SEPARATOR);
 	Log::status("Finished loading, Now compiling...");
 
 	//compile dat shader
@@ -405,23 +393,26 @@ void Loader::loadFragmentShader(std::string path, GLuint * index){
 
 	//fancy printing
 	Log::status("Compile Status:");
-	Log::status(SEPARATOR);
 	Log::status("-- BEGIN --");
 	Log::status(&shaderStatus[0]);
 	Log::status("-- END --");
+
+	*index = shaderId;
 }
 
 void Loader::loadShader(std::string vertex, std::string fragment, GLuint * programId){
-	GLuint fragmentShaderId, vertexShaderId;	//holds the indevidual shaders
+	GLuint fragmentShaderId = 0, vertexShaderId = 0;	//holds the indevidual shaders
 
 	//load dem shaders
 	try{
 		Loader::loadVertexShader(vertex, &vertexShaderId);
+		Log::status("");
 	}catch(Defaults::Exception e){
 		throw Defaults::Exception(Defaults::CANNOT_LOAD_VERTEX_SHADER, e.description);
 	}
 	try{
 		Loader::loadFragmentShader(fragment, &fragmentShaderId);
+		Log::status("");
 	}catch(Defaults::Exception e){
 		throw Defaults::Exception(Defaults::CANNOT_LOAD_FRAGMENT_SHADER, e.description);
 	}
@@ -456,14 +447,20 @@ void Loader::linkShader(GLuint vert, GLuint frag, GLuint * programId){
 
 	//print message
 	Log::status("Link Status:");
-	Log::status(SEPARATOR);
 	if (logLength > 0){
 		std::vector<char> shaderStatusMessage(logLength + 1);
 		glGetProgramInfoLog(*programId, logLength, NULL, &shaderStatusMessage[0]);
 		Log::status("-- BEGIN --");
 		Log::status(&shaderStatusMessage[0]);
-		Log::status("-- END -- ");
+		Log::status("-- END --");
 	}else{
 		Log::status("NO STATUS FOR SHADER");
 	}
+}
+
+void readPngData(png_structp pngPtr, png_bytep data, png_size_t length){
+	//function called by libpng to load data
+
+	png_voidp steam = png_get_io_ptr(pngPtr);	//get ifsteam back from libpng
+	((std::istream*)steam)->read((char*)data, length);	//read the data using ifsteam
 }

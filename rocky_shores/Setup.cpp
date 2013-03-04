@@ -25,7 +25,7 @@ void Setup::initialLoad(std::string _path){
 	Loader::loadShader("res/shaders/simple.vert", "res/shaders/simple.frag", &simpleShader);	//err umm well...
 
 	SimpleRender renderer;
-	//renderer.setShader(simpleShader);
+	renderer.setShader(simpleShader);
 
 	//create a drawable for testing the display system
 	Drawable testMesh;

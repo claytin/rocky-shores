@@ -14,11 +14,10 @@ void Log::status(std::string message){
 	int posOfNewLine = message.find_first_of('\n');    //search for \n new line character
 
 	if(posOfNewLine != -1){    //check if there are any new line (\n) characters
-		//Log::status(message.substr(posOfNewLine, (message.length() - posOfNewLine) - 1));
 		if(posOfNewLine == message.length() - 1){
 			Log::status( message.substr(0, message.length() - 1).c_str());
 		}else{
-			
+
 		}
 	}else{
 		lineNumber++;
