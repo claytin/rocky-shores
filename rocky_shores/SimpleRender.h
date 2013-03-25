@@ -22,7 +22,11 @@ private:
 	//the shader that will be used for all rendering
 	GLuint shaderId;
 
-	//holds the matrix that will be used in rendering
+	//the matricies used to transform the object, NOTE: each object has a model matrix
 	glm::mat4 * view;
 	glm::mat4 * projection;
+
+	//open matrix id of model view project matrix
+	GLuint matrixId;
+
 };

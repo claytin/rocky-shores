@@ -1,12 +1,13 @@
 #version 330 core
 
+//recieve color from vertex shader
+in vec3 fragmentColor;
+
 // Ouput data
 out vec3 color;
 
-void main()
-{
+void main(){
 
-	// Output color = red 
-	color = vec3(1,0,0);
+	color = fragmentColor;
 
 }
