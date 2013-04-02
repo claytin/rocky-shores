@@ -1,15 +1,14 @@
-#version 330 core
+#version 150
 
-layout(location = 0) in vec3 vertexPosition_ms;
-layout(location = 1) in vec3 vertexColor;
+in vec3 vert;
+//in vec3 vertexColor;
 
-out vec3 fragmentColor;    //outputs color to fragment shader
-uniform mat4 MVP;
+out vec4 fragmentColor;    //outputs color to fragment shader
+//uniform mat4 MVP;
 
 void main(){
 
-    gl_Position.xyz = vertexPosition_ms;
-    gl_Position.w = 1.0;
+    gl_Position = vec4(vert, 1);
 
-    fragmentColor = vertexColor;
+    fragmentColor = vec4(1, 0, 1, 1);
 }

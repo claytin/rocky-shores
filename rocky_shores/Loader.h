@@ -39,7 +39,7 @@ public:
 	static void loadFragmentShader(std::string path, GLuint * index) throw (Defaults::Exception);	//load a fragment shader and compile it
 	static void loadShader(std::string vertexShader, std::string fragmentShader, GLuint * programId) throw (Defaults::Exception);    //load and link both shaders and return id of the program
 	static void linkShader(GLuint vertexShaderProgramId, GLuint fragmentShaderProgramId, GLuint * linkedProgramId) throw (Defaults::Exception);    //link a vertex and fragment opengl compile shader
-
+	static std::string stringFromFile(std::string path);    //load any file into a std::string container
 
 	void setMipmap(GLenum min, GLenum max);    //sets the mipmap for all textures loaded
 

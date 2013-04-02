@@ -464,3 +464,20 @@ void readPngData(png_structp pngPtr, png_bytep data, png_size_t length){
 	png_voidp steam = png_get_io_ptr(pngPtr);	//get ifsteam back from libpng
 	((std::istream*)steam)->read((char*)data, length);	//read the data using ifsteam
 }
+
+std::string Loader::stringFromFile(std::string path){
+	std::string fileText = "";
+	std::ifstream file(path);
+
+	if(!file.is_open()){
+		throw Defaults::Exception(Defaults::FILE_NOT_FOUND, "the file could not be loaded at the specified path, it could be corrupt or missing.");
+	}
+
+	while(file.good()){
+		std::string line;
+		std::getline(file, line);
+		fileText += "\n" + line;
+	}
+
+	return fileText;
+}

@@ -1,4 +1,4 @@
-//SimpleRender.h / SimpleRender.cpp
+//Render.h / Render.cpp
 //used to do simple rendering that is not optomised for performances
 //-mgc480
 
@@ -8,15 +8,17 @@
 #include <glm\gtc\matrix_transform.hpp>
 #include "Drawable.h"
 
-class SimpleRender{
+class Render{
 
 public:
-	SimpleRender(void);
-	~SimpleRender(void);
+	Render(void);
+	~Render(void);
 
 	void setShader(GLuint shaderId);	//can only use one shader, pass in the shader id already linked
 	void setMatrix(glm::mat4 * view, glm::mat4 * projection);	//set the matrix for rendering, it can only have at a time but can be switched
 	void render(Drawable * Drawable);	//renders the given drawable object with the preset shader and matrices
+	void compileVertexBuffer(Drawable * object);
+	void compileVertexBuffer(GLfloat * vertexData, GLuint * VAO, GLuint * VBO);
 
 private:
 	//the shader that will be used for all rendering

@@ -1,10 +1,10 @@
-#version 330 core
+#version 150
 
 //recieve color from vertex shader
-in vec3 fragmentColor;
+in vec4 fragmentColor;
 
 // Ouput data
-out vec3 color;
+out vec4 color;
 
 void main(){
 

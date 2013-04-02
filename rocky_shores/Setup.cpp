@@ -22,10 +22,11 @@ void Setup::initialLoad(std::string _path){
 	}
 
 	GLuint simpleShader;
-	Loader::loadShader("res/shaders/simple.vert", "res/shaders/simple.frag", &simpleShader);	//err umm well...
 
-	SimpleRender renderer;
-	renderer.setShader(simpleShader);
+	Loader::loadShader("res/shaders/simple.vert", "res/shaders/simple.frag", &simpleShader);
+
+	Render menuRender;
+	menuRender.setShader(simpleShader);
 
 	//create a drawable for testing the display system
 	Drawable testMesh;
@@ -38,7 +39,7 @@ void Setup::initialLoad(std::string _path){
 	tempFace.color = glm::vec3(20, 180, 255);
 	testMesh.addFace(tempFace);
 
-	testMesh.compileVao();	//and the object is ready for rendering
+	menuRender.compileVertexBuffer(&testMesh);
 
 	while(true){
 		//check if the window should be closed
@@ -49,7 +50,7 @@ void Setup::initialLoad(std::string _path){
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		renderer.render(&testMesh);    //just keep sendering it to the renderer for the rendering to hapener
+		menuRender.render(&testMesh);    //just keep sendering it to the renderer for the rendering to hapener
 
 		glfwSwapBuffers();
 	}

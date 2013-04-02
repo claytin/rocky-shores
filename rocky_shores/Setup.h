@@ -12,7 +12,7 @@
 #include "Loader.h"
 #include <glm\glm.hpp>
 #include <glm\gtc\matrix_transform.hpp>
-#include "SimpleRender.h"
+#include "Render.h"
 #include "ConsoleInput.h"
 #include "Drawable.h"
 
