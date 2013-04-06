@@ -408,13 +408,13 @@ void Loader::loadShader(std::string vertex, std::string fragment, GLuint * progr
 		Loader::loadVertexShader(vertex, &vertexShaderId);
 		Log::status("");
 	}catch(Defaults::Exception e){
-		throw Defaults::Exception(Defaults::CANNOT_LOAD_VERTEX_SHADER, e.description);
+		throw Defaults::Exception(Defaults::SHADER_ERROR, e.description);
 	}
 	try{
 		Loader::loadFragmentShader(fragment, &fragmentShaderId);
 		Log::status("");
 	}catch(Defaults::Exception e){
-		throw Defaults::Exception(Defaults::CANNOT_LOAD_FRAGMENT_SHADER, e.description);
+		throw Defaults::Exception(Defaults::SHADER_ERROR, e.description);
 	}
 
 	//git dem shaders and link em

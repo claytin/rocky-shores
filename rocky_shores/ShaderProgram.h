@@ -5,6 +5,10 @@
 class ShaderProgram{
 
 public:
-	ShaderProgram(std::vector<Shader> shaders);    //takes a vector of shaders that will be compiled into single program
+	ShaderProgram(std::vector<Shader> shaders) throw (Defaults::Exception);    //takes a vector of shaders that will be compiled into single program
 	~ShaderProgram(void);
+
+private:
+	GLuint programId;
+	bool compiled;
 };
