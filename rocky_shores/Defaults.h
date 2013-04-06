@@ -8,9 +8,9 @@
 
 namespace Defaults{
 	//a big long enum full of all the possible errors and returns that a function could return / throw
-	enum Status {GOOD = 0, BAD = 1, FILE_NOT_FOUND = 2, FILE_CORRUPT = 3, OUT_OF_MEMORY = 4, UNKNOWN_ERROR = 5, INVALID_FILE = 6,
-		CANNOT_LOAD_VERTEX_SHADER = 7, CANNOT_LOAD_FRAGMENT_SHADER = 8, CANNOT_LINK_SHADERS = 9, NULL_POINTER = 10,
-		NULL_VERTEX_CORD = 11, OUT_OF_BOUNDS = 12, NOT_IMPLEMENTED = 13, EXTERNAL = 14, INVALID_STRING = 15};
+	enum Status {GOOD, BAD, FILE_NOT_FOUND, FILE_CORRUPT, OUT_OF_MEMORY, UNKNOWN_ERROR, INVALID_FILE,
+		CANNOT_LINK_SHADERS, NULL_POINTER, NULL_VERTEX_CORD, OUT_OF_BOUNDS, NOT_IMPLEMENTED,
+		EXTERNAL, INVALID_STRING, SHADER_ERROR};
 
 	//used when returning errors, it contains the enum of the error along with additional information.
 	//most of the information is optional and can be left blank / null.
