@@ -12,8 +12,14 @@ ShaderProgram::ShaderProgram(std::vector<Shader> shaders){
 	}
 
 	for(unsigned int i = 0; i < shaders.size(); i++){
-
+		try{
+			glDetachShader(programId, shaders[i].getShaderId());
+		}catch(Defaults::Exception e){
+			throw e;
+		}
 	}
+
+
 }
 
 ShaderProgram::~ShaderProgram(void){
