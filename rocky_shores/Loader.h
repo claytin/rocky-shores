@@ -35,10 +35,6 @@ public:
 	void loadPng(std::string path) throw (Defaults::Exception);    //load png texture and put it in textures
 	static void loadPng(std::string path, GLuint * index) throw (Defaults::Exception);    //load png
 
-	static void loadVertexShader(std::string path, GLuint * index) throw (Defaults::Exception);    //load a vertex shader and compile it put its index/id in var index
-	static void loadFragmentShader(std::string path, GLuint * index) throw (Defaults::Exception);	//load a fragment shader and compile it
-	static void loadShader(std::string vertexShader, std::string fragmentShader, GLuint * programId) throw (Defaults::Exception);    //load and link both shaders and return id of the program
-	static void linkShader(GLuint vertexShaderProgramId, GLuint fragmentShaderProgramId, GLuint * linkedProgramId) throw (Defaults::Exception);    //link a vertex and fragment opengl compile shader
 	static std::string stringFromFile(std::string path);    //load any file into a std::string container
 
 	void setMipmap(GLenum min, GLenum max);    //sets the mipmap for all textures loaded

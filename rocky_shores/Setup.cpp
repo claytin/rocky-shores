@@ -23,10 +23,10 @@ void Setup::initialLoad(std::string _path){
 
 	GLuint simpleShader;
 
-	Loader::loadShader("res/shaders/simple.vert", "res/shaders/simple.frag", &simpleShader);
+	//Loader::loadShader("res/shaders/simple.vert", "res/shaders/simple.frag", &simpleShader);
 
 	Render menuRender;
-	menuRender.setShader(simpleShader);
+	//menuRender.setShader(simpleShader);
 
 	//create a drawable for testing the display system
 	Drawable testMesh;
