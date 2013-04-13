@@ -15,6 +15,8 @@
 #include "Render.h"
 #include "ConsoleInput.h"
 #include "Drawable.h"
+#include "ShaderProgram.h"
+#include "Shader.h"
 
 class Setup{
 

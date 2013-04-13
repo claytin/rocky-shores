@@ -21,12 +21,15 @@ void Setup::initialLoad(std::string _path){
 		return;
 	}
 
-	GLuint simpleShader;
+	//load the base vertex and fragment shaders and put them in a program
+	std::vector<Shader> shaders;
+	shaders.push_back(Shader(Loader::stringFromFile("res/shaders/base.frag"), GL_FRAGMENT_SHADER));
+	shaders.push_back(Shader(Loader::stringFromFile("res/shaders/base.vert"), GL_VERTEX_SHADER));
 
-	//Loader::loadShader("res/shaders/simple.vert", "res/shaders/simple.frag", &simpleShader);
+	ShaderProgram simpleShaderProgram(shaders);
 
 	Render menuRender;
-	//menuRender.setShader(simpleShader);
+	menuRender.setShader(&simpleShaderProgram);
 
 	//create a drawable for testing the display system
 	Drawable testMesh;

@@ -321,7 +321,7 @@ std::string Loader::stringFromFile(std::string path){
 	std::ifstream file(path);
 
 	if(!file.is_open()){
-		throw Defaults::Exception(Defaults::FILE_NOT_FOUND, "the file could not be loaded at the specified path, it could be corrupt or missing.");
+		throw Defaults::Exception(Defaults::FILE_NOT_FOUND, "the file could not be loaded at the specified path\"" + path + "\", it could be corrupt or missing.");
 	}
 
 	while(file.good()){

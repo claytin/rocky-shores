@@ -1,3 +1,8 @@
+//ShaderProgram.h / ShaderProgram.cpp
+//holds a number of linked shaders that can be used as a program
+//it also returns the intex of attribute and uniform variables
+//-mgc480
+
 #pragma once
 #include "Shader.h"
 #include <vector>

@@ -1,6 +1,6 @@
 #include "Render.h"
 
-Render::Render(void){
+Render::Render(void) : shader(NULL){
 
 }
 
@@ -8,11 +8,11 @@ Render::~Render(void){
 
 }
 
-void Render::setShader(GLuint _shaderId){
-	shaderId = _shaderId;
+void Render::setShader(ShaderProgram * _shader){
+	shader = _shader;
 
 	//register the mvp matrix whit the shader now that its been set
-	matrixId = glGetUniformLocation(shaderId, "MVP");
+	//matrixId = glGetUniformLocation(shaderId, "MVP");
 }
 
 //TODO THIS DOES NOT DO ANYTING YET
@@ -22,7 +22,7 @@ void Render::setMatrix(glm::mat4 * _view, glm::mat4 * _projection){
 }
 
 void Render::render(Drawable * drawObject){
-	glUseProgram(shaderId);    //use the shader that has been set beforehand
+	glUseProgram(shader->getProgramId());    //use the shader that has been set beforehand
 
 	glBindVertexArray(*drawObject->getVertexArrayId());
 
@@ -62,8 +62,9 @@ void Render::compileVertexBuffer(GLfloat * vertexData, GLuint * VAO, GLuint * VB
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData1), vertexData1, GL_STATIC_DRAW);
     
     // connect the xyz to the "vert" attribute of the vertex shader
-    glEnableVertexAttribArray(glGetUniformLocation(shaderId, "vert"));
-    glVertexAttribPointer(glGetUniformLocation(shaderId, "vert"), 3, GL_FLOAT, GL_FALSE, 0, NULL);
+	
+	glEnableVertexAttribArray(shader->attrib("vert"));
+	glVertexAttribPointer(shader->attrib("vert"), 3, GL_FLOAT, GL_FALSE, 0, NULL);
     
     // unbind the VBO and VAO
     glBindBuffer(GL_ARRAY_BUFFER, 0);

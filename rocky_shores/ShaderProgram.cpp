@@ -82,7 +82,7 @@ GLuint ShaderProgram::uniform(std::string _uniform){
 	GLint uniform = 0;
 	const GLchar * uniformAsChar = _uniform.c_str();
 
-	uniform = glGetAttribLocation(programId, uniformAsChar);
+	uniform = glGetUniformLocation(programId, uniformAsChar);
 
 	if(uniform == -1){
 		throw Defaults::Exception(Defaults::SHADER_ERROR, "the requested unifrom was not found \"" + _uniform + "\"");
