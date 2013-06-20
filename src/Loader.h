@@ -11,8 +11,8 @@
 #include <iostream>
 #include <iostream>
 #include "Defaults.h"
-#include <gl\glew.h>
-#include <gl\glfw.h>
+#include <GL/glew.h>
+#include <GL/glfw.h>
 #include "Log.h"
 #include <png.h>
 

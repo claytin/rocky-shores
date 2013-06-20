@@ -4,14 +4,14 @@
 //errors / display graphic while loading primary resources
 //-mgc480
 
-#pragma once
-#include <gl\glew.h>
-#include <GL\glfw.h>
+//opengl stuff
+#include <GL/glew.h>
+#include <GL/glfw.h>
 #include "Log.h"
 #include <sstream>
 #include "Loader.h"
-#include <glm\glm.hpp>
-#include <glm\gtc\matrix_transform.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtc\matrix_transform.hpp>
 #include "Render.h"
 #include "ConsoleInput.h"
 #include "Drawable.h"

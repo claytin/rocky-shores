@@ -7,7 +7,7 @@
 #include <iostream>
 
 namespace Defaults{
-	//a big long enum full of all the possible errors and returns that a function could return / throw
+	//a big long enum full of most of the errors errors and returns that a function could return / throw
 	enum Status {GOOD, BAD, FILE_NOT_FOUND, FILE_CORRUPT, OUT_OF_MEMORY, UNKNOWN_ERROR, INVALID_FILE,
 		CANNOT_LINK_SHADERS, NULL_POINTER, NULL_VERTEX_CORD, OUT_OF_BOUNDS, NOT_IMPLEMENTED,
 		EXTERNAL, INVALID_STRING, SHADER_ERROR};
@@ -22,7 +22,7 @@ namespace Defaults{
 		std::string file;    //the file which the error ocured in, similar to line in that its usefull for debuging
 
 		//CONSTRUCTOR, simply sets the variables to something in case they where not set by function returning the error
-		Exception(Status _status = Status::UNKNOWN_ERROR, std::string _description = "No description of error avalible.",
+		Exception(Status _status = Status::FILE_NOT_FOUND, std::string _description = "No description of error avalible.",
 			int lineNumber = 0, std::string _filePath = "No file path avalible."){
 			type = _status;    //if the type is never set then it will be unknown
 			description = _description;

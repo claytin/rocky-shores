@@ -4,7 +4,7 @@
 
 #pragma once
 #include <iostream>	//uses iostream for console output
-#include <stireg.h>	//uses stirng for message
+#include <string.h>	//uses string for message
 
 class Log{
 	
