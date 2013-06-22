@@ -21,19 +21,19 @@ public:
 	Loader(void);
 	~Loader(void);
 
-	void loadRes(std::string path) throw (Defaults::Exception);    //load a .res file (file that lists resourses) and load each
+	void loadRes(std::string path);    //load a .res file (file that lists resourses) and load each
 
-	void loadTga(std::string path) throw (Defaults::Exception);    //load a tga and put it in the loader texture map
-	static void loadTga(std::string path, GLuint * index) throw (Defaults::Exception);    //load a tga file and puts its index in the second param
+	void loadTga(std::string path);    //load a tga and put it in the loader texture map
+	static void loadTga(std::string path, GLuint * index);    //load a tga file and puts its index in the second param
 
-	void loadBmp(std::string path) throw (Defaults::Exception);    //load a bmp image file into opengl and add its index to the texture list
-	static void loadBmp(std::string path, GLuint * index) throw (Defaults::Exception);	//load a bmp image into opengl and set var index to its index
+	void loadBmp(std::string path);    //load a bmp image file into opengl and add its index to the texture list
+	static void loadBmp(std::string path, GLuint * index);	//load a bmp image into opengl and set var index to its index
 
-	void loadGif(std::string path) throw (Defaults::Exception);    //load gif put it in textures list
-	static void loadGif(std::string path, GLuint * index) throw (Defaults::Exception);    //load gif
+	void loadGif(std::string path);    //load gif put it in textures list
+	static void loadGif(std::string path, GLuint * index);    //load gif
 
-	void loadPng(std::string path) throw (Defaults::Exception);    //load png texture and put it in textures
-	static void loadPng(std::string path, GLuint * index) throw (Defaults::Exception);    //load png
+	void loadPng(std::string path);    //load png texture and put it in textures
+	static void loadPng(std::string path, GLuint * index);    //load png
 
 	static std::string stringFromFile(std::string path);    //load any file into a std::string container
 

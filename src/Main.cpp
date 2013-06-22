@@ -8,7 +8,6 @@
 
 //main function
 int main(int argc, char * args){
-
 	Setup setup;
 	setup.display(800, 600);	//initialize opengl, glew, and glfw
 	setup.initialLoad("res/require.res");

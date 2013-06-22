@@ -20,7 +20,7 @@ void Loader::loadRes(std::string _path){
 	std::string directory = "null";
 	std::string line = "null";    //the current line being read and proccessed
 
-	std::ifstream file(_path);    //open the path into file
+	std::ifstream file;    //open the path into file
 
 	if(!file.is_open()){    //check if file was open correctally
 		throw Defaults::Exception(Defaults::FILE_NOT_FOUND, "Unable to find or open file \"" + _path + "\". File doesn't exsist or is currupt.");
@@ -55,7 +55,7 @@ void Loader::loadRes(std::string _path){
 
 		std::string fileType = "err";	//this will the type of file ex: png, ogg, exe
 
-		int posOfPeriod = line.find_last_of('.');	//the position of the last period on the current line after that is the file type
+		unsigned int posOfPeriod = line.find_last_of('.');	//the position of the last period on the current line after that is the file type
 		if(posOfPeriod == std::string::npos){     //if there is no period in the line then throw an invalid file error
 			throw Defaults::Exception(Defaults::INVALID_FILE, "The file \"" + directory + line + "\" listed in the .res file \"" + _path + "\" was found invalid and could not be loaded");
 		}
@@ -101,9 +101,16 @@ void Loader::loadRes(std::string _path){
 
 		if(exceptionThrown){
 			Defaults::Exception modifiedException = exception;
+
+			//convert the exeption type into a string
+			std::string type;          // string which will contain the result
+			std::ostringstream convert;   // stream used for the conversion
+			convert << exception.type;      // insert the textual representation of 'Number' in the characters in the stream
+			type = convert.str(); // set 'Result' to the contents of the stream
+
 			//reformat the exception description to hopefully describe the error better
 			modifiedException.description = "while loading .res file \"" + _path + "\" the resource \"" + directory + line
-				+ "\" could not be loaded and threw \"" + exception.description + "\" with error code \"" + std::to_string(exception.type) + "\"";
+				+ "\" could not be loaded and threw \"" + exception.description + "\" with error code \"" + type + "\"";
 			throw modifiedException;
 		}
 	}
