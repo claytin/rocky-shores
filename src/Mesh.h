@@ -6,7 +6,7 @@
 //-mgc480
 
 #pragma once
-#include <glm\glm.hpp>
+#include <glm/glm.hpp>
 #include <vector>
 #include "Log.h"
 #include "Defaults.h"
@@ -51,7 +51,7 @@ public:
 		normalList.clear();
 		faces.clear();
 	}
-	
+
 	//all simple one line functions are put in the header for simplicity
 	//they just do operations on the list
 	void addCords(glm::vec3 vertexPosition){    //add vertex position to list

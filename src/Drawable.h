@@ -4,9 +4,9 @@
 //-mgc480
 
 #pragma once
-#include <glm\glm.hpp>
+#include <glm/glm.hpp>
 #include "Mesh.h"
-#include <gl\glew.h>
+#include <GL/glew.h>
 
 class Drawable : public Mesh, public glm::mat4{    //it uses glm::mat4 as its model space matrix because every drawable object must have a position (z can be left 0 for 2d space)
 

@@ -5,7 +5,7 @@
 #pragma once
 #include <string>
 #include <iostream>
-#include <GL\glew.h>
+#include <GL/glew.h>
 #include "Defaults.h"
 #include "Log.h"
 
