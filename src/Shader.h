@@ -12,16 +12,16 @@
 class Shader{
 
 public:
-	Shader(std::string shaderSource, GLenum shaderType) throw (Defaults::Exception);	//will compile the shader and use shader id
+	Shader(std::string shaderSource, GLenum shaderType);	//will compile the shader and use shader id
 	Shader(void){	//just sets compiled to false because it was never compiled
 		compiled = false;
 	}
 	~Shader(void);	//just deletes the shader thast stored in shader id and sets compiled to false
 
-	GLuint getShaderId(void) throw (Defaults::Exception);	//returns the shaders id if compiled otherwise it will through am error
+	GLuint getShaderId(void);	//returns the shaders id if compiled otherwise it will through am error
 
-	static void compile(std::string shaderSource, GLenum shaderType, GLuint * shaderToReturn) throw (Defaults::Exception);
-	void compile(std::string shaderSource, GLenum shaderType) throw (Defaults::Exception);
+	static void compile(std::string shaderSource, GLenum shaderType, GLuint * shaderToReturn);
+	void compile(std::string shaderSource, GLenum shaderType);
 
 private:
 

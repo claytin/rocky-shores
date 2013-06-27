@@ -16,7 +16,8 @@ void Setup::initialLoad(std::string _path){
 		loader.loadRes(_path);
 		log.status("loaded required resources");
 	}catch(Defaults::Exception e){
-		log.error( e.description + "\n ERROR CODE: \"" + std::to_string(e.type) + "\"");
+		//log.error( e.description + "\n ERROR CODE: \"" + std::to_string(e.type) + "\"");
+		log.error( e.description + "\n ERROR CODE: \" tmp fix \"");
 		glfwTerminate();
 		return;
 	}
@@ -35,12 +36,13 @@ void Setup::initialLoad(std::string _path){
 	Drawable testMesh;
 
 	//create a nice triangle, because who doesn't love triangles
-	Mesh::face tempFace;
+	//TODO yeah ill have to fix this later
+	/*Mesh::face tempFace;
 	tempFace.cord[0] = &glm::vec3(0.0f, 1.0f, 0.0f);
 	tempFace.cord[1] = &glm::vec3(1.0f, -1.0f, 0.0f);
 	tempFace.cord[2] = &glm::vec3(-1.0f, -1.0f, 0.0f);
 	tempFace.color = glm::vec3(20, 180, 255);
-	testMesh.addFace(tempFace);
+	testMesh.addFace(tempFace);*/
 
 	menuRender.compileVertexBuffer(&testMesh);
 
@@ -66,14 +68,14 @@ void Setup::display(int _width, int _height){
 	}else{
 		log.status("glfw initialized");	//if successfully initied glfw
 	}
-	
+
 
 	if(!glfwOpenWindow(_width, _height, 0, 0, 0, 0, 32, 0, GLFW_WINDOW)){   //try to crate window with glfw, coming soon customizable paramaters
 		log.error("cannot create glfw window", __LINE__, __FILE__);	//if failed to crate window
 	}else{
 		log.status("glfw window crated");	//if window is crated print success
 	}
-	
+
 
 
 	GLenum status = glewInit();
