@@ -241,6 +241,7 @@ void Loader::loadPng(std::string path){
 	textures[path.substr(0, path.find_last_of("."))] = textureId;
 }
 
+/*
 void Loader::loadPng(std::string path, GLuint * index){	//this function relies compleatly on libpng to load pngs
 	const int pngSignatureSize = 8;
 
@@ -315,13 +316,19 @@ void Loader::loadPng(std::string path, GLuint * index){	//this function relies c
 	delete[] (png_bytep)rowPtrs;
 	png_destroy_read_struct(&pngPtr, &infoPtr,(png_infopp)0);
 }
+*/
 
+void Loader::loadPng(std::string path, GLuint * index){
+}
+
+/*
 void readPngData(png_structp pngPtr, png_bytep data, png_size_t length){
 	//function called by libpng to load data
 
 	png_voidp steam = png_get_io_ptr(pngPtr);	//get ifsteam back from libpng
 	((std::istream*)steam)->read((char*)data, length);	//read the data using ifsteam
 }
+*/
 
 std::string Loader::stringFromFile(std::string path){
 	std::string fileText = "";
