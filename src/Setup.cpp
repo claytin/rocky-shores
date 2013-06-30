@@ -1,5 +1,5 @@
-#define GLEW_STATIC
 #include "Setup.h"
+#define res "../res/"
 
 Setup::Setup(void){
 
@@ -24,8 +24,15 @@ void Setup::initialLoad(std::string _path){
 
 	//load the base vertex and fragment shaders and put them in a program
 	std::vector<Shader> shaders;
-	shaders.push_back(Shader(Loader::stringFromFile("res/shaders/base.frag"), GL_FRAGMENT_SHADER));
-	shaders.push_back(Shader(Loader::stringFromFile("res/shaders/base.vert"), GL_VERTEX_SHADER));
+	try{
+		shaders.push_back(Shader(Loader::stringFromFile(res "/shaders/base.frag"), GL_FRAGMENT_SHADER));
+		shaders.push_back(Shader(Loader::stringFromFile(res "/shaders/base.vert"), GL_VERTEX_SHADER));
+	}catch(Defaults::Exception e){
+		//if it was unable to load the basic shaders needed (may hardcode base shaders later...)
+		log.error(e.description + "\n ERROR CODE: \" ....\"");
+		glfwTerminate();
+		return;
+	}
 
 	ShaderProgram simpleShaderProgram(shaders);
 
@@ -37,12 +44,12 @@ void Setup::initialLoad(std::string _path){
 
 	//create a nice triangle, because who doesn't love triangles
 	//TODO yeah ill have to fix this later
-	/*Mesh::face tempFace;
-	tempFace.cord[0] = &glm::vec3(0.0f, 1.0f, 0.0f);
-	tempFace.cord[1] = &glm::vec3(1.0f, -1.0f, 0.0f);
-	tempFace.cord[2] = &glm::vec3(-1.0f, -1.0f, 0.0f);
+	Mesh::face  tempFace;
+	tempFace.cord[0] = new glm::vec3(0.0f, 1.0f, 0.0f);
+	tempFace.cord[1] = new glm::vec3(1.0f, -1.0f, 0.0f);
+	tempFace.cord[2] = new glm::vec3(-1.0f, -1.0f, 0.0f);
 	tempFace.color = glm::vec3(20, 180, 255);
-	testMesh.addFace(tempFace);*/
+	testMesh.addFace(tempFace);
 
 	menuRender.compileVertexBuffer(&testMesh);
 
@@ -55,7 +62,7 @@ void Setup::initialLoad(std::string _path){
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		menuRender.render(&testMesh);    //just keep sendering it to the renderer for the rendering to hapener
+		menuRender.render(&testMesh);    //just keep rendering
 
 		glfwSwapBuffers();
 	}

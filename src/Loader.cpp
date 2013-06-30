@@ -20,7 +20,7 @@ void Loader::loadRes(std::string _path){
 	std::string directory = "null";
 	std::string line = "null";	//the current line being read and proccessed
 
-	std::ifstream file;	//open the path into file
+	std::ifstream file(_path.c_str());	//open the path into file
 
 	if(!file.is_open()){	//check if file was open correctally
 		throw Defaults::Exception(Defaults::FILE_NOT_FOUND, "Unable to find or open file \"" + _path + "\". File doesn't exsist or is currupt.");
@@ -241,7 +241,7 @@ void Loader::loadPng(std::string path){
 	textures[path.substr(0, path.find_last_of("."))] = textureId;
 }
 
-/*
+
 void Loader::loadPng(std::string path, GLuint * index){	//this function relies compleatly on libpng to load pngs
 	const int pngSignatureSize = 8;
 
@@ -316,19 +316,19 @@ void Loader::loadPng(std::string path, GLuint * index){	//this function relies c
 	delete[] (png_bytep)rowPtrs;
 	png_destroy_read_struct(&pngPtr, &infoPtr,(png_infopp)0);
 }
-*/
-
-void Loader::loadPng(std::string path, GLuint * index){
-}
 
 /*
+void Loader::loadPng(std::string path, GLuint * index){
+}
+*/
+
 void readPngData(png_structp pngPtr, png_bytep data, png_size_t length){
 	//function called by libpng to load data
 
 	png_voidp steam = png_get_io_ptr(pngPtr);	//get ifsteam back from libpng
 	((std::istream*)steam)->read((char*)data, length);	//read the data using ifsteam
 }
-*/
+
 
 std::string Loader::stringFromFile(std::string path){
 	std::string fileText = "";

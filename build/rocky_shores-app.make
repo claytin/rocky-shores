@@ -29,7 +29,7 @@ ifeq ($(config),debug)
   CFLAGS    += $(CPPFLAGS) $(ARCH) -g -Wall
   CXXFLAGS  += $(CFLAGS) 
   LDFLAGS   += 
-  LIBS      += -lGL -lglfw -lGLEW
+  LIBS      += -lGL -lglfw -lGLEW -lpng
   RESFLAGS  += $(DEFINES) $(INCLUDES) 
   LDDEPS    += 
   LINKCMD    = $(CXX) -o $(TARGET) $(OBJECTS) $(LDFLAGS) $(RESOURCES) $(ARCH) $(LIBS)
@@ -51,7 +51,7 @@ ifeq ($(config),release)
   CFLAGS    += $(CPPFLAGS) $(ARCH) -O2 -Wall
   CXXFLAGS  += $(CFLAGS) 
   LDFLAGS   += -s
-  LIBS      += -lGL -lglfw -lGLEW
+  LIBS      += -lGL -lglfw -lGLEW -lpng
   RESFLAGS  += $(DEFINES) $(INCLUDES) 
   LDDEPS    += 
   LINKCMD    = $(CXX) -o $(TARGET) $(OBJECTS) $(LDFLAGS) $(RESOURCES) $(ARCH) $(LIBS)

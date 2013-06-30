@@ -45,7 +45,8 @@ ShaderProgram::ShaderProgram(std::vector<Shader> _shaders){
 		programId = 0;
 
 		//throw a shader error with opengl's error message
-		message += " opengl returned\"" + error + "\"";
+		message += " opengl returned \"" + error + "\" ";
+		std::cout << "tst " + message + "\n";
 		throw Defaults::Exception(Defaults::SHADER_ERROR, message, __LINE__, __FILE__);
 	}
 

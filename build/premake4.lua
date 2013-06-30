@@ -13,19 +13,19 @@ solution "rocky_shores"
 			links {"glu32", "opengl32", "gdi32", "winmm", "user32","GLEW"}
 
 		configuration "linux"
-			links {"GL","glfw","GLEW"}
-		
+			links {"GL","glfw","GLEW", "png"}
+
 		configuration "macosx"
 			links {"GL","glfw","GLEW", "CoreFoundation.framework"}
 			libdirs {"/opt/local/lib"}
 			includedirs {"/opt/local/include"}
-		
+
 		configuration "haiku"
 			links {"GL","glfw","GLEW"}
 
 		configuration "freebsd"
 			links {"GL","glfw","GLEW"}
-		
+
 		configuration "debug"
 			defines { "DEBUG" }
 			flags { "Symbols" }

@@ -5,12 +5,17 @@
 //-mgc480
 
 #include "Setup.h"	//needs setup to call functions
+#define res "../res/"	//TEMPORARY JUST TO GET THINGS WORKING
 
 //main function
 int main(int argc, char ** args){
 	Setup setup;
 	setup.display(800, 600);	//initialize opengl, glew, and glfw
-	setup.initialLoad("res/require.res");
+	try{
+		setup.initialLoad(res "/require.res");
+	}catch(Defaults::Exception e){
+		std::cout << e.description << std::endl;
+	}
 
 	std::cout << "Press Enter To Continue..." << std::endl;
 	std::getchar();
