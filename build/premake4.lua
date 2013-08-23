@@ -3,17 +3,19 @@ solution "rocky_shores"
 	targetdir("./bin")
 	configurations { "debug", "release" }
 	objdir("obj/" .. os.get() .. "/")
+	includedirs {"../external"}
 
 	project "rocky_shores-app"
-		kind "ConsoleApp"
+		kind "windowedApp"
 		language "C++"
-		files { "../src/*.cpp" }
+		files { "../src/**.cpp" }
+		buildoptions { "-Wno-unknown-pragmas" }
 
 		configuration "windows"
 			links {"glu32", "opengl32", "gdi32", "winmm", "user32","GLEW"}
 
 		configuration "linux"
-			links {"GL","glfw","GLEW", "png"}
+			links {"GL","glfw2","GLEW", "png"}
 
 		configuration "macosx"
 			links {"GL","glfw","GLEW", "CoreFoundation.framework"}

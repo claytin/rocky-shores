@@ -71,23 +71,35 @@ void Setup::initialLoad(std::string _path){
 void Setup::display(int _width, int _height){
 
 	if(!glfwInit()){    //try to initalize glfw
-		log.error("cannot initialize glfw", __LINE__, __FILE__);	//if it fails to init send error to log
+		log.error("cannot initialize glfw");	//if it fails to init send error to log
 	}else{
 		log.status("glfw initialized");	//if successfully initied glfw
 	}
 
 
 	if(!glfwOpenWindow(_width, _height, 0, 0, 0, 0, 32, 0, GLFW_WINDOW)){   //try to crate window with glfw, coming soon customizable paramaters
-		log.error("cannot create glfw window", __LINE__, __FILE__);	//if failed to crate window
+		log.error("cannot create glfw window");	//if failed to crate window
 	}else{
-		log.status("glfw window crated");	//if window is crated print success
+		log.status("glfw window created");	//if window is crated print success
 	}
 
 
 
 	GLenum status = glewInit();
 	if(status == GLEW_OK){    //attempt to initialize glew
-		log.status("glew inited");
+		log.status("glew initialized");
+
+		// print out some info about the graphics drivers, oh and ofcouse opengl has to have its own data type so thats what the ostringstring is for
+		std::ostringstream hardwareInfoStringStream;
+		hardwareInfoStringStream << "OpenGL version: " << glGetString(GL_VERSION) << "\nGLSL version: " << glGetString(GL_SHADING_LANGUAGE_VERSION)
+			<< "\nHardware vendor: " << glGetString(GL_VENDOR) << "\nRenderer: " << glGetString(GL_RENDERER);
+		std::string hardwareInfo;
+
+		//put in a nice little section
+		log.startBlock("Hardware Info");
+		log.status(hardwareInfoStringStream.str());
+		log.endBlock();
+
 	}else{	//if it is unable to init glew
 		std::stringstream error;	//string stream used to extract string form glewgeterrorstring
 		error << glewGetErrorString(status);	//get the error
@@ -98,7 +110,7 @@ void Setup::display(int _width, int _height){
 	}
 
 	//check to make sure system meets requirments
-	if(!GLEW_VERSION_3_0){
-		log.error("Opengl version 3.0 is not supported this could cause problems");
+	if(!GLEW_VERSION_3_2){
+		log.error("Opengl version 3.2 is not supported this is a problem");
 	}
 }

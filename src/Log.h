@@ -7,12 +7,15 @@
 #include <string.h>	//uses string for message
 
 class Log{
-	
+
 public:
 	Log(void);
 	~Log(void);
 
 	static void status(std::string message);	//prints the message to the console
+	//used to break the output into blocks, each block has a start then prints either status or errors then ends the block
+	static void startBlock(std::string blockName);
+	static void endBlock();
 	static void error(std::string message, int line = -1, const char * file = 0);	//same as status but also brings up dialogue
 };
 

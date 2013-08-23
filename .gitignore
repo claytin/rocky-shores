@@ -39,3 +39,5 @@ Release/
 ipch/
 obj/
 bin/
+external/
+ref/

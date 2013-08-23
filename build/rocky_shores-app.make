@@ -24,12 +24,12 @@ ifeq ($(config),debug)
   TARGETDIR  = bin
   TARGET     = $(TARGETDIR)/rocky_shores-debug
   DEFINES   += -DDEBUG
-  INCLUDES  += 
+  INCLUDES  += -I../external
   CPPFLAGS  += -MMD -MP $(DEFINES) $(INCLUDES)
-  CFLAGS    += $(CPPFLAGS) $(ARCH) -g -Wall
+  CFLAGS    += $(CPPFLAGS) $(ARCH) -g -Wno-unknown-pragmas -Wall
   CXXFLAGS  += $(CFLAGS) 
   LDFLAGS   += 
-  LIBS      += -lGL -lglfw -lGLEW -lpng
+  LIBS      += -lGL -lglfw2 -lGLEW -lpng
   RESFLAGS  += $(DEFINES) $(INCLUDES) 
   LDDEPS    += 
   LINKCMD    = $(CXX) -o $(TARGET) $(OBJECTS) $(LDFLAGS) $(RESOURCES) $(ARCH) $(LIBS)
@@ -46,12 +46,12 @@ ifeq ($(config),release)
   TARGETDIR  = bin
   TARGET     = $(TARGETDIR)/rocky_shores-release
   DEFINES   += -DNDEBUG
-  INCLUDES  += 
+  INCLUDES  += -I../external
   CPPFLAGS  += -MMD -MP $(DEFINES) $(INCLUDES)
-  CFLAGS    += $(CPPFLAGS) $(ARCH) -O2 -Wall
+  CFLAGS    += $(CPPFLAGS) $(ARCH) -O2 -Wno-unknown-pragmas -Wall
   CXXFLAGS  += $(CFLAGS) 
   LDFLAGS   += -s
-  LIBS      += -lGL -lglfw -lGLEW -lpng
+  LIBS      += -lGL -lglfw2 -lGLEW -lpng
   RESFLAGS  += $(DEFINES) $(INCLUDES) 
   LDDEPS    += 
   LINKCMD    = $(CXX) -o $(TARGET) $(OBJECTS) $(LDFLAGS) $(RESOURCES) $(ARCH) $(LIBS)
@@ -64,10 +64,10 @@ ifeq ($(config),release)
 endif
 
 OBJECTS := \
+	$(OBJDIR)/main.o \
 	$(OBJDIR)/ConsoleInput.o \
 	$(OBJDIR)/Loader.o \
 	$(OBJDIR)/Log.o \
-	$(OBJDIR)/Main.o \
 	$(OBJDIR)/Mesh.o \
 	$(OBJDIR)/ShaderProgram.o \
 	$(OBJDIR)/Setup.o \
@@ -135,6 +135,9 @@ $(GCH): $(PCH)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 endif
 
+$(OBJDIR)/main.o: ../src/main.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/ConsoleInput.o: ../src/ConsoleInput.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
@@ -142,9 +145,6 @@ $(OBJDIR)/Loader.o: ../src/Loader.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/Log.o: ../src/Log.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/Main.o: ../src/Main.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/Mesh.o: ../src/Mesh.cpp
