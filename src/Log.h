@@ -4,7 +4,8 @@
 
 #pragma once
 #include <iostream>	//uses iostream for console output
-#include <string.h>	//uses string for message
+#include <string>	//uses string for message
+#include <sstream>	//to convert numbers to strings with ostringstream
 
 class Log{
 
@@ -12,10 +13,13 @@ public:
 	Log(void);
 	~Log(void);
 
-	static void status(std::string message);	//prints the message to the console
+	static void status(std::string message);	//prints the message to the console by default or whatever else you want
 	//used to break the output into blocks, each block has a start then prints either status or errors then ends the block
 	static void startBlock(std::string blockName);
 	static void endBlock();
 	static void error(std::string message, int line = -1, const char * file = 0);	//same as status but also brings up dialogue
+
+private:
+	static void output(std::string  messageToPrint);	//prints the message out to watever is specified, (by default its just uses cout)
 };
 

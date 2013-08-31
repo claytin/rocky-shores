@@ -22,11 +22,13 @@ void Log::status(std::string message){
 		status(message.substr(posOfNewLine + 1, message.length() - 1));
 	}else{
 		lineNumber++;
-		std::cout << lineNumber << ":> ";	//print out message
+		std::ostringstream oss;
+		oss << lineNumber;
+		output(oss.str() + ":>");
 		for(unsigned int i = 0; i < blockNumber; i++){
-			std::cout << "\t|";
+			output("\t|");
 		}
-		std::cout << message.c_str() << std::endl;	//end line
+		output((std::string)message.c_str() + "\n");
 	}
 }
 
@@ -53,6 +55,8 @@ void Log::error(std::string message, int line, const char * file){
 		std::cout << " @ " << file << ":" << line;
 	}
 	std::cout << std::endl;	//end line
+}
 
-	//TODO coming soon: open a dialogue
+void Log::output(std::string message){
+	std::cout << message;
 }
