@@ -4,7 +4,7 @@
 #main font to use
 font.png
 
-#avatars / icons
+#aaavatars / icons
 captain777_icon.png
 mgc480_icon.png
 ninthawsome_icon.png
