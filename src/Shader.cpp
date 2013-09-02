@@ -48,8 +48,10 @@ void Shader::compile(std::string source, GLenum type, GLuint * shaderId){
 	const char* code = source.c_str();
 	glShaderSource(*shaderId, 1, (const GLchar**)&code, NULL);
 
-	//compile the shader and output this fact
-	Log::status("compiling shader with id: " + *shaderId);
+	//compile the shader and output this fact, also we need a stringstream because opengl is extra special
+	std::ostringstream oss;
+	oss << *shaderId;
+	Log::status("compiling shader with id: " + oss.str());
 	glCompileShader(*shaderId);
 
 	//check for compilation errors
@@ -57,7 +59,8 @@ void Shader::compile(std::string source, GLenum type, GLuint * shaderId){
 	glGetShaderiv(*shaderId, GL_COMPILE_STATUS, &status);	//put the status in status, he he
 
 	if(status == GL_FALSE){
-		std::string message = "unable to compile shader with id: " + *shaderId;	//the error that will be thrown
+		oss << *shaderId;
+		std::string message = "unable to compile shader with id: " + oss.str();	//the error that will be thrown
 		std::string error = "";	//holds opengl error
 
 		//get the error message from opengl (why opengl why does it have to be this way)
@@ -78,5 +81,6 @@ void Shader::compile(std::string source, GLenum type, GLuint * shaderId){
 	}
 
 	//if it reached hear then it was probobaly succesfull
-	Log::status("shader sucessfully id: " + *shaderId);
+	oss << *shaderId;
+	Log::status("shader sucessfully id: " + oss.str());
 }

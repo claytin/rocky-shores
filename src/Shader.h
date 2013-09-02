@@ -7,6 +7,7 @@
 #include <iostream>
 #include <GL/glew.h>
 #include "Defaults.h"
+#include <sstream>
 #include "Log.h"
 
 class Shader{

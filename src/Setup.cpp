@@ -14,13 +14,14 @@ void Setup::initialLoad(std::string _path){
 
 	try{
 		loader.loadRes(_path);
-		log.status("loaded required resources");
 	}catch(Defaults::Exception e){
 		//log.error( e.description + "\n ERROR CODE: \"" + std::to_string(e.type) + "\"");
-		log.error( e.description + "\n ERROR CODE: \" tmp fix \"");
+		log.error( e.description + "\n ERROR CODE: \" tmp fix \"");Log::endBlock();
 		glfwTerminate();
 		return;
 	}
+
+	log.status("loaded required resources into memory, now onto the shaders");
 
 	//load the base vertex and fragment shaders and put them in a program
 	std::vector<Shader> shaders;

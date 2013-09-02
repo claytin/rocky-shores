@@ -15,7 +15,7 @@ int main(int argc, char ** args){
 	try{
 		setup.initialLoad(res "/require.res");
 	}catch(Defaults::Exception e){
-		std::cout << "there was a problem initial loading required resources >" << e.description << std::endl;
+		std::cout << "there was a problem initial loading required resources > " << e.description << std::endl;
 	}
 
 	//this is so in windows I can read it before the terminal window closes
