@@ -26,8 +26,8 @@ void Setup::initialLoad(std::string _path){
 	//load the base vertex and fragment shaders and put them in a program
 	std::vector<Shader> shaders;
 	try{
-		shaders.push_back(Shader(Loader::stringFromFile(res "/shaders/base.frag"), GL_FRAGMENT_SHADER));
-		shaders.push_back(Shader(Loader::stringFromFile(res "/shaders/base.vert"), GL_VERTEX_SHADER));
+		shaders.push_back(Shader(Loader::stringFromFile(res "/shaders/base.frag"), GL_FRAGMENT_SHADER, res "/shaders/base.frag"));
+		shaders.push_back(Shader(Loader::stringFromFile(res "/shaders/base.vert"), GL_VERTEX_SHADER, res "/shaders/base.vert"));
 	}catch(Defaults::Exception e){
 		//if it was unable to load the basic shaders needed (may hardcode base shaders later...)
 		log.error(e.description + "\n ERROR CODE: \" ....\"");
