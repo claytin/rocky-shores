@@ -33,6 +33,8 @@ void Loader::loadRes(std::string _path){
 		directory = "";
 	}
 
+	Log::startBlock("Loading from: " + _path);
+
 	while(true){
 		//as long as the file is readable do: puth the current line contents in variable line
 		//check if the line is not empty
@@ -56,7 +58,8 @@ void Loader::loadRes(std::string _path){
 		std::string fileType = "err";	//this will the type of file ex: png, ogg, exe
 
 		unsigned int posOfPeriod = line.find_last_of('.');	//the position of the last period on the current line after that is the file type
-		if(posOfPeriod == std::string::npos){	 //if there is no period in the line then throw an invalid file error
+		if(posOfPeriod == (unsigned)std::string::npos){	 //if there is no period in the line then throw an invalid file error
+			
 			throw Defaults::Exception(Defaults::INVALID_FILE, "The file \"" + directory + line + "\" listed in the .res file \"" + _path + "\" was found invalid and could not be loaded");
 		}
 		fileType = line.substr(posOfPeriod + 1, line.length() - (posOfPeriod + 1));	//puts the string after the last period in var filetype
@@ -113,7 +116,10 @@ void Loader::loadRes(std::string _path){
 				+ "\" could not be loaded and threw \"" + exception.description + "\" with error code \"" + type + "\"";
 			throw modifiedException;
 		}
+
+		Log::status("loaded: " + directory + line);
 	}
+	Log::endBlock();
 }
 
 void Loader::loadTga(std::string _path){

@@ -1,4 +1,4 @@
-Rocky Shores - baseFramework
+Rocky Shores - take2
 ============
 
-A temporary branch while working on the base engine that the game will run ontop of.
+A second attempt at getting all the opengl stuff to work out... see ya at take 3...

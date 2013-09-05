@@ -17,9 +17,9 @@
 #include "Drawable.h"
 #include "ShaderProgram.h"
 #include "Shader.h"
+#include <string>
 
 class Setup{
-
 public:
 	Setup(void);
 	~Setup(void);

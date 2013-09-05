@@ -4,6 +4,7 @@
 
 #include <glm/glm.hpp>    //glm is used for positioning and transforming camera
 #include <glm/gtc/matrix_transform.hpp>
+#include "Defaults.h"
 
 class Camera{
 

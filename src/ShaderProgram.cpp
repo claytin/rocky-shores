@@ -2,7 +2,7 @@
 
 ShaderProgram::ShaderProgram(std::vector<Shader> _shaders){
 	//there needs to be at least one shader in the shaders list/ vector
-	if(_shaders.size() <= 0){
+	if(_shaders.size() <= 0){	//but what if there where -1 shaders...
 		throw Defaults::Exception(Defaults::SHADER_ERROR, "the list of shaders to be compiled needs to have at least one shader", __LINE__, __FILE__);
 	}
 
@@ -12,12 +12,19 @@ ShaderProgram::ShaderProgram(std::vector<Shader> _shaders){
 		throw Defaults::Exception(Defaults::SHADER_ERROR, "unable to create shader program", __LINE__, __FILE__);
 	}
 
+	Log::startBlock("creating shader program ");
+
 	//add the the shaders to this program
 	for(unsigned int i = 0; i < _shaders.size(); i++){
+		std::ostringstream oss;
+		oss << _shaders[i].getShaderId();
+		Log::status("adding shader with name: " + _shaders[i].getShaderName() + " and id: " + oss.str());
+
 		glAttachShader(programId, _shaders[i].getShaderId());
 	}
 
-	//ling all the individual shaders together
+	//link all the individual shaders together
+	Log::status("linking program");
 	glLinkProgram(programId);
 
 	//now that they have been linked you can remove the shaders
@@ -29,23 +36,24 @@ ShaderProgram::ShaderProgram(std::vector<Shader> _shaders){
 	GLint status;
 	glGetProgramiv(programId, GL_LINK_STATUS, &status);
 	if(status == GL_FALSE){
-		std::string message = "unable to link shaders and create a program with id: " + programId;	//the error that will be thrown
-		std::string error = "";	//holds opengl error
+		std::ostringstream oss;
+		oss << programId;
+		std::string message = "unable to link shaders and create a program with id: " + oss.str();	//the error that will be thrown
+		std::ostringstream error;;	//holds opengl error
 
 		//get the error message from opengl (why opengl why does it have to be this way)
 		GLint infoLogLength;
 		glGetShaderiv(programId, GL_INFO_LOG_LENGTH, &infoLogLength);
 		char* strInfoLog = new char[infoLogLength + 1];
 		glGetShaderInfoLog(programId, infoLogLength, NULL, strInfoLog);
-		error += strInfoLog;
+		error << strInfoLog;
 		delete[] strInfoLog;
 
 		//free the memory being used to hold the shader
 		glDeleteShader(programId);
 		programId = 0;
-
 		//throw a shader error with opengl's error message
-		message += " opengl returned \"" + error + "\" ";
+		message += " opengl returned \"" + error.str() + "\" ";
 		std::cout << "tst " + message + "\n";
 		throw Defaults::Exception(Defaults::SHADER_ERROR, message, __LINE__, __FILE__);
 	}
