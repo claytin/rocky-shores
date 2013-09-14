@@ -19,8 +19,11 @@ int main(int argc, char ** args){
 	}
 
 	//this is so in windows I can read it before the terminal window closes
+	#if defined( __WIN32__ ) || defined( _WIN32 ) || defined( _WIN64 )
 	std::cout << "Press Enter To Continue..." << std::endl;
 	std::getchar();
+	#endif
+	//yay not on windows anymore
 
 	return 0;	//yay all done here
 }

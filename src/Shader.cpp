@@ -1,7 +1,6 @@
 #include "Shader.h"
 
-Shader::Shader(std::string source, GLenum type, std::string _shaderName){
-	shaderName = _shaderName;
+Shader::Shader(std::string source, GLenum type){
 	try{
 		compile(source, type);
 	}catch(Defaults::Exception e){
@@ -25,15 +24,15 @@ GLuint Shader::getShaderId(void){
 
 void Shader::compile(std::string source, GLenum type){
 	try{
-		compile(source, type, &shaderId, shaderName);
+		compile(source, type, &shaderId);
 	}catch(Defaults::Exception e){
 		throw e;
 	}
 	compiled = true;
 }
 
-void Shader::compile(std::string source, GLenum type, GLuint * shaderId, std::string _name){
-	*shaderId = 0;	//if the shader id is 0 later on there most have been an error
+void Shader::compile(std::string source, GLenum type, GLuint * shaderId){
+	GLuint tempShader = 0;	//if the shader id is 0 later on there most have been an error
 
 	//make sure the source actually contains something
 	if(source == ""){
@@ -41,41 +40,46 @@ void Shader::compile(std::string source, GLenum type, GLuint * shaderId, std::st
 	}
 
 	//create object and check if it was created
-	*shaderId = glCreateShader(type);
-	if(*shaderId == 0){
+	tempShader = glCreateShader(type);
+	if(tempShader == 0){
 		throw Defaults::Exception(Defaults::SHADER_ERROR, "could not create a shader object", __LINE__, __FILE__);
 	}
 
 	//set the source of the shader
 	const char* code = source.c_str();
-	glShaderSource(*shaderId, 1, (const GLchar**)&code, NULL);
+	glShaderSource(tempShader, 1, (const GLchar**)&code, NULL);
 
 	//compile the shader and output this fact, also we need a stringstream because opengl is extra special
 	std::ostringstream oss;
-	oss << *shaderId;
-	Log::status("compiling shader with name: " + _name);
-	glCompileShader(*shaderId);
+	oss << tempShader;
+	Log::status("compiling shader with id: " + oss.str());
+	oss.str("");
+	oss.clear();
+	glCompileShader(tempShader);
 
 	//check for compilation errors
 	GLint status;	//holds the compilation status
-	glGetShaderiv(*shaderId, GL_COMPILE_STATUS, &status);	//put the status in status, he he
+	glGetShaderiv(tempShader, GL_COMPILE_STATUS, &status);	//put the status in status, he he
 
 	if(status == GL_FALSE){
-		oss << *shaderId;
+		oss << tempShader;
 		std::string message = "unable to compile shader with id: " + oss.str();	//the error that will be thrown
+		oss.str("");
+		oss.clear();
+
 		std::string error = "";	//holds opengl error
 
 		//get the error message from opengl (why opengl why does it have to be this way)
 		GLint infoLogLength;
-		glGetShaderiv(*shaderId, GL_INFO_LOG_LENGTH, &infoLogLength);
+		glGetShaderiv(tempShader, GL_INFO_LOG_LENGTH, &infoLogLength);
 		char* strInfoLog = new char[infoLogLength + 1];
-		glGetShaderInfoLog(*shaderId, infoLogLength, NULL, strInfoLog);
+		glGetShaderInfoLog(tempShader, infoLogLength, NULL, strInfoLog);
 		error += strInfoLog;
 		delete[] strInfoLog;
 
 		//free the memory being used to hold the shader
-		glDeleteShader(*shaderId);
-		*shaderId = 0;
+		glDeleteShader(tempShader);
+		tempShader = 0;
 
 		//throw a shader error with opengl's error message
 		message += " opengl returned\"" + error + "\"";
@@ -83,6 +87,10 @@ void Shader::compile(std::string source, GLenum type, GLuint * shaderId, std::st
 	}
 
 	//if it reached hear then it was probobaly succesfull
-	oss << *shaderId;
-	Log::status("shader sucessfully id: " + oss.str());
+	oss.str("");
+	oss.clear();
+	oss << tempShader;
+	Log::status("shader sucessfully compiled id: " + oss.str());
+
+	*shaderId = tempShader;
 }
