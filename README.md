@@ -1,4 +1,4 @@
-Rocky Shores - take2
+Rocky Shores
 ============
 
-A second attempt at getting all the opengl stuff to work out... see ya at take 3...
+I'll get around to writing this one day
