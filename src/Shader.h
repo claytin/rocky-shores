@@ -9,6 +9,7 @@
 #include "Defaults.h"
 #include <sstream>
 #include "Log.h"
+#include <iostream>
 
 class Shader{
 
@@ -28,7 +29,6 @@ public:
 	void compile(std::string shaderSource, GLenum shaderType);
 
 private:
-
 	GLuint shaderId;
 	bool compiled;
 	std::string shaderName;

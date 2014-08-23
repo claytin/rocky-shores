@@ -10,7 +10,7 @@
 class ShaderProgram{
 
 public:
-	ShaderProgram(std::vector<Shader> shaders);    //takes a vector of shaders that will be compiled into single program
+	ShaderProgram(std::vector<Shader*> shaders);    //takes a vector of shaders that will be compiled into single program
 	~ShaderProgram(void);	//deletes the shader program, this makes the shader program reliant on keeping this object alive (don't delete this unless you don't need the shader program)
 
 	GLuint attrib(std::string attributeName);	//gives the attribute index for the give name

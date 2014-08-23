@@ -1,6 +1,6 @@
 #include "ShaderProgram.h"
 
-ShaderProgram::ShaderProgram(std::vector<Shader> _shaders){
+ShaderProgram::ShaderProgram(std::vector<Shader*> _shaders){
 	//there needs to be at least one shader in the shaders list/ vector
 	if(_shaders.size() <= 0){	//but what if there where -1 shaders...
 		throw Defaults::Exception(Defaults::SHADER_ERROR, "the list of shaders to be compiled needs to have at least one shader", __LINE__, __FILE__);
@@ -17,10 +17,10 @@ ShaderProgram::ShaderProgram(std::vector<Shader> _shaders){
 	//add the the shaders to this program
 	for(unsigned int i = 0; i < _shaders.size(); i++){
 		std::ostringstream oss;
-		oss << _shaders[i].getShaderId();
-		Log::status("adding shader with name: " + _shaders[i].getShaderName() + " and id: " + oss.str());
+		oss << _shaders[i]->getShaderId();
+		Log::status("adding shader with id: " + oss.str());
 
-		glAttachShader(programId, _shaders[i].getShaderId());
+		glAttachShader(programId, _shaders[i]->getShaderId());
 	}
 
 	//link all the individual shaders together
@@ -29,7 +29,7 @@ ShaderProgram::ShaderProgram(std::vector<Shader> _shaders){
 
 	//now that they have been linked you can remove the shaders
 	for(unsigned int i = 0; i < _shaders.size(); i++){
-		glDetachShader(programId, _shaders[i].getShaderId());
+		glDetachShader(programId, _shaders[i]->getShaderId());
 	}
 
 	//check to make sure all went well
