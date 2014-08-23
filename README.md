@@ -1,4 +1,4 @@
-Rocky Shores - Dev
+Rocky Shores - take2
 ============
 
-This branch is used for developement (hence the title) and is compleatly unstable. There are no precompiled binarys and you must compile them yourself if you would like to test it.
+A second attempt at getting all the opengl stuff to work out... see ya at take 3...

@@ -27,13 +27,17 @@
 *.opensdf
 *.suo
 *.db
+*.exe
+
+#sublime
 *.sublime-project
 *.sublime-workspace
-*.exe
 
 # Directorys to ignore
 Debug/
 Release/
 ipch/
-
-
+obj/
+bin/
+external/
+ref/
