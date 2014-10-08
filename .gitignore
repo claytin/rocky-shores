@@ -44,3 +44,8 @@ ref/
 
 #because i'm using catch
 catch.hpp
+
+*.log
+*.cfg
+rocky_shores_test
+rocky_shores
