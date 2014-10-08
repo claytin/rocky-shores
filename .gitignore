@@ -41,3 +41,6 @@ obj/
 bin/
 external/
 ref/
+
+#because i'm using catch
+catch.hpp
