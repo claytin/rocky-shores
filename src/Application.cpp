@@ -1,4 +1,3 @@
-
 #include "Application.h"
 
 Application::Application(void): mRoot(0),
@@ -55,65 +54,14 @@ void Application::createCamera(void){
 	// Look back along -Z
 	mCamera->lookAt(Ogre::Vector3(0,0,-300));
 	mCamera->setNearClipDistance(1);
+	//mCamera->setPolygonMode(Ogre::PM_WIREFRAME);
 
 	// create a default camera controller
 	mCameraMan = new OgreBites::SdkCameraMan(mCamera);}
 
 void Application::createFrameListener(void){
-	Ogre::LogManager::getSingletonPtr()->logMessage("*** Initializing OIS ***");
-	OIS::ParamList pl;
-	size_t windowHnd = 0;
-	std::ostringstream windowHndStr;
-
-	mWindow->getCustomAttribute("WINDOW", &windowHnd);
-	windowHndStr << windowHnd;
-	pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
-
-	mInputManager = OIS::InputManager::createInputSystem( pl );
-
-	mKeyboard = static_cast<OIS::Keyboard*>(mInputManager->createInputObject(
-		OIS::OISKeyboard, true));
-	mMouse = static_cast<OIS::Mouse*>(mInputManager->createInputObject(
-		OIS::OISMouse, true));
-
-	mMouse->setEventCallback(this);
-	mKeyboard->setEventCallback(this);
-
-	//Set initial mouse clipping size
-	windowResized(mWindow);
-
-	//Register as a Window listener
-	Ogre::WindowEventUtilities::addWindowEventListener(mWindow, this);
-
-	mInputContext.mKeyboard = mKeyboard;
-    mInputContext.mMouse = mMouse;
-    mTrayMgr = new OgreBites::SdkTrayManager("InterfaceName", mWindow,
-		mInputContext, this);
-	mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
-	mTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
-	mTrayMgr->hideCursor();
-
-	// create a params panel for displaying sample details
-	Ogre::StringVector items;
-	items.push_back("cam.pX");
-	items.push_back("cam.pY");
-	items.push_back("cam.pZ");
-	items.push_back("");
-	items.push_back("cam.oW");
-	items.push_back("cam.oX");
-	items.push_back("cam.oY");
-	items.push_back("cam.oZ");
-	items.push_back("");
-	items.push_back("Filtering");
-	items.push_back("Poly Mode");
-
-	mDetailsPanel = mTrayMgr->createParamsPanel(OgreBites::TL_NONE,
-		"DetailsPanel", 200, items);
-	mDetailsPanel->setParamValue(9, "Bilinear");
-	mDetailsPanel->setParamValue(10, "Solid");
-	mDetailsPanel->hide();
-
-	mRoot->addFrameListener(this);
+	EventListener *FrameListener = new EventListener(node2, mWindow);
+	mRoot->addFrameListener(FrameListener);
 }
 
 void Application::destroyScene(void){
@@ -123,7 +71,7 @@ void Application::destroyScene(void){
 void Application::createViewports(void){
 	// Create one viewport, entire window
 	Ogre::Viewport* vp = mWindow->addViewport(mCamera);
-	vp->setBackgroundColour(Ogre::ColourValue(0,0,0));
+	vp->setBackgroundColour(Ogre::ColourValue(255, 0, 255));
 
 	// Alter the camera aspect ratio to match the viewport
 	mCamera->setAspectRatio(
@@ -176,11 +124,11 @@ void Application::start(void){
 
 void Application::createScene(void){
 	//create nodes
-	Ogre::SceneNode *node1 = mSceneMgr->createSceneNode("node1");
+	node1 = mSceneMgr->createSceneNode("node1");
 	mSceneMgr->getRootSceneNode()->addChild(node1);
-	Ogre::SceneNode *node2 = mSceneMgr->createSceneNode("node2");
+	node2 = mSceneMgr->createSceneNode("node2");
 	mSceneMgr->getRootSceneNode()->addChild(node2);
-	
+
 	//create test entity (sinbad)
 	Ogre::Entity* testEnt1 = mSceneMgr->createEntity("hehe", "Sinbad.mesh");
 	Ogre::Entity* testEnt2 = mSceneMgr->createEntity("hehe2", "Sinbad.mesh");
@@ -194,8 +142,8 @@ void Application::createScene(void){
 	node1->translate(Ogre::Vector3(-5, 0, 0));
 
 	//now rotate and move
-	node2->yaw(Ogre::Radian(Ogre::Math::HALF_PI));
-	node2->translate(Ogre::Vector3(0, 0, 15), Ogre::Node::TS_LOCAL);
+	//node2->yaw(Ogre::Radian(Ogre::Math::HALF_PI));
+	//node2->translate(Ogre::Vector3(0, 0, 15), Ogre::Node::TS_LOCAL);
 
 
 	Ogre::Light* light = mSceneMgr->createLight("Light1");

@@ -19,6 +19,7 @@
 #include <SdkCameraMan.h>
 
 #include "config.h"
+#include "EventListener.h"
 
 class Application: public Ogre::FrameListener,
 	public Ogre::WindowEventListener,
@@ -78,6 +79,8 @@ protected:
 	OIS::InputManager* mInputManager;
 	OIS::Mouse*    mMouse;
 	OIS::Keyboard* mKeyboard;
+	Ogre::SceneNode *node1;
+	Ogre::SceneNode *node2;
 
 };
 
