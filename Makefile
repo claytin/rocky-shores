@@ -23,6 +23,8 @@ run: $(TARGET)
 clean:
 	rm -rf *.o
 	rm -rf $(TARGET)
+	rm -rf $(TEST_TARGET)
+	rm -rf $(TEST_OBJ_DIR)*.o
 
 #######################################################################
 #                    put all test stuff down here                     #
