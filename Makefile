@@ -35,11 +35,11 @@ TEST_TARGET = rocky_shores_test
 TEST_SRC_DIR = test/
 TEST_OBJ_DIR = test/
 
-TEST_CFLAGS = -I./$(TEST_SRC_DIR) -I./$(SRC_DIR)
+TEST_CFLAGS = -I./$(TEST_SRC_DIR) -I./$(SRC_DIR) -I./include
 
 TEST_SRC_FILES = $(wildcard $(TEST_SRC_DIR)*.cpp)
 TEST_OBJ_FILES = $(addprefix $(TEST_OBJ_DIR),$(notdir $(TEST_SRC_FILES:.cpp=.o)))
-OBJ_FILES_NO_MAIN = $(filter-out $(OBJ_DIR)Main.o,$(OBJ_FILES))
+OBJ_FILES_NO_MAIN = $(filter-out $(OBJ_DIR)main.o,$(OBJ_FILES))
 
 test: $(TARGET) $(TEST_TARGET)
 

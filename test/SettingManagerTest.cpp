@@ -1,4 +1,4 @@
-#include "Test.h"
+#include "test.h"
 #include "SettingManager.h"
 
 //TEST_CASE( "vectors can be sized and resized", "[vector]" ) {
