@@ -49,3 +49,7 @@ catch.hpp
 *.cfg
 rocky_shores_test
 rocky_shores
+
+#for ycm files
+*.py
+*.pyc
